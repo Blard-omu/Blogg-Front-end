@@ -1,0 +1,37 @@
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display+SC:wght@900&display=swap');
+
+
+/* Global css variables */
+:root {
+  --primary: #26bdd2;
+  --white: #ffffff;
+  --royal-blue: #262dd2;
+  --royal-purple: #6726d2;
+  --royal-pink: #d22697;
+  --royal-green: #26d22d;
+  --royal-yellow: #d2a126;
+  --black-text-colour: #2b2a2a;
+  --grey-sub-text-colour: #626060;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a,
+li,
+button,
+button:hover,
+a:hover,
+a:focus,
+button:focus, .button-primary, .button-primary:hover {
+  text-decoration: none;
+  list-style: none;
+  border: none;
+  outline: none;
+  outline-offset: none;
+}

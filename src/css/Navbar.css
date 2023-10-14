@@ -1,0 +1,21 @@
+.nav-container{
+    background-color: aquamarine;
+    width: 100%;
+}
+.logo {
+  color: var(--primary);
+  font-family: 'Playfair Display SC';
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+}
+.button-primary{
+    background-color: var(--primary);
+    outline: none;
+    border: none;
+}
+.button-primary:hover{
+    background-color: var(--primary);
+    opacity: 0.8;
+}

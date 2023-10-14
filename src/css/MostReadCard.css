@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display+SC:wght@900&display=swap');
+
+:root {
+  --primary: #26bdd2;
+  --white: #ffffff;
+  --royal-blue: #262dd2;
+  --royal-purple: #6726d2;
+  --royal-pink: #d22697;
+  --royal-green: #26d22d;
+  --royal-yellow: #d2a126;
+  --black-text-colour: #2b2a2a;
+  --grey-sub-text-colour: #626060;
+}
+.most-readCard{
+    font-family: 'Montserrat', sans-serif;
+}
+.most-readCard h2{
+    font-weight: 600;
+}
+h4{
+    font-weight: 600;
+}
+.most-read-card{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+
+}
+.img-most{
+    width: 40%;
+}
+.img-most img{
+    width: 100%;
+}
+.most-card-inner{
+    width: 58%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.self-defence1{
+    width: 100%;
+    display: flex;
+}
+.tag1{
+    color: var(--white);
+    padding: 5px;
+    border-radius: 5px;
+}
+.t1{
+    background-color: var(--royal-blue);
+}
+.t2{
+    background-color: var(--royal-green);
+}
+.t3{
+    background-color: var(--royal-purple);
+}
+
+@media(max-width: 768px){
+    .most-readCard{
+        margin-top: 2rem;
+    }
+    .most-read-card{
+        flex-direction: column;
+    }
+    .img-most{
+        width: 100%;
+    }
+    .most-card-inner{
+        width: 100%;
+    }
+    .self-defence1{
+        margin: 1rem 0;
+    }
+}

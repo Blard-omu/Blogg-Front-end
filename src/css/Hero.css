@@ -1,0 +1,60 @@
+.hero-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-bottom: 4rem;
+
+}
+.hero-content {
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.hero-image {
+  width: 50%;
+}
+.hero-image img {
+  width: 100%;
+}
+.hero-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.hero-content h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+}
+.hero-content-text{
+    height: 40%;
+}
+
+.hero-content P {
+    font-family: "Montserrat", sans-serif;
+    font-size: 18PX;
+}
+
+.button-primary {
+    width: 8rem;
+    padding: 10px 5px;
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column-reverse;
+    margin-top: 0;
+  }
+  .hero-content {
+    width: 100%;
+    text-align: center;
+  }
+  .hero-image {
+    width: 100%;
+  }
+  .hero-content h1{
+    font-size: 3rem;
+  }
+}

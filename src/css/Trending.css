@@ -1,0 +1,25 @@
+.trending{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8rem;
+}
+.trending-card-container{
+    width: 49%;
+}
+.most-read-container{
+    width: 49%;
+}
+
+@media (max-width: 768px){
+    .trending{
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+    .trending-card-container{
+        width: 100%;
+    }
+    .most-read-container{
+        width: 100%;
+    }
+}

@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display+SC:wght@900&display=swap');
+
+:root {
+  --primary: #26bdd2;
+  --white: #ffffff;
+  --royal-blue: #262dd2;
+  --royal-purple: #6726d2;
+  --royal-pink: #d22697;
+  --royal-green: #26d22d;
+  --royal-yellow: #d2a126;
+  --black-text-colour: #2b2a2a;
+  --grey-sub-text-colour: #626060;
+}
+
+.trending-card{
+    font-family: 'montserrat', sans-serif;
+}
+.trending-card h2{
+    font-weight: 600;
+}
+.trending-card h4{
+    font-weight: 600;
+}
+
+.trending-card-image > img{
+    width: 100%;
+}
+
+.self-defence{
+    width: 86%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+.tag{
+    padding: 5px 8px;
+    background-color: var(--royal-pink);
+    color: var(--white);
+    border-radius: 5px;
+}
+.tag, .views, .read-time, .date{
+    width: 23%;
+}
+.veiws{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+@media(max-width:768px){
+    .self-defence{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+    }
+    .tag, .views, .read-time, .date{
+        width: 31%;
+        font-size: 11px;
+    }
+}
