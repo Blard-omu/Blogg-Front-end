@@ -1,11 +1,11 @@
 import React from "react";
-import "../css/SwiperCard.css";
+import "../css/blogDetailCard.css";
+// import "../css/SwiperCard.css";
 import viewss from "../assets/images/ep_view.png";
 import dot from "../assets/images/dot.png";
 
-const SwiperCard = ({
+const BlogDetailCard = ({
   imageUrl,
-  _id,
   read_time,
   published_date,
   title,
@@ -14,8 +14,15 @@ const SwiperCard = ({
 }) => {
   return (
     <>
-      <div className="swiper-container" key={_id}>
+      <div className="detail row">
+        <div className="detail-hero col-md-5">
         <img src={imageUrl} alt="" />
+        </div>
+        <div className="col-md-6">
+        <div className="trending-down mt-3">
+          <h4>{title}</h4>
+          <p>{content}</p>
+        </div>
         <div className="self-defence">
           <div className="views ms-2">
             <img src={viewss} alt="view_icon" />
@@ -27,13 +34,10 @@ const SwiperCard = ({
           </div>
           <span className="date">{published_date ? published_date : "23/11/2023"}</span>
         </div>
-        <div className="trending-down mt-3">
-          <h4>{title}</h4>
-          <p>{content}</p>
         </div>
       </div>
     </>
   );
 };
 
-export default SwiperCard;
+export default BlogDetailCard;

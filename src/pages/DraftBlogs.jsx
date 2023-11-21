@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 
-const Published = () => {
-  const [publishedBlogs, setPublishedBlogs] = useState([]);
+const DraftBlogs = () => {
+  const [draftBlogs, setDraftBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { user } = useAuth();
@@ -16,12 +16,12 @@ const Published = () => {
       try {
         const response = await axios.get("/blogs/all", {
           params: {
-            state: "published",
+            state: "draft",
             author: user.username,
           },
         });
 
-        setPublishedBlogs(response.data.blogs);
+        setDraftBlogs(response.data.blogs);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching published blogs:", error);
@@ -37,13 +37,12 @@ const Published = () => {
 
   return (
     <div>
-      <h2>Published Blogs</h2>
-      {publishedBlogs.map((blog) => (
+      <h2>Draft Blogs</h2>
+      {draftBlogs.map((blog) => (
         <div key={blog._id}>
           <h3>{blog.title}</h3>
           <p>{blog.content}</p>
-          <b>{blog.author}</b>
-          <br />
+          <b>{blog.author}</b> <br />
           <em>{blog.state}</em>
         </div>
       ))}
@@ -51,4 +50,4 @@ const Published = () => {
   );
 };
 
-export default Published;
+export default DraftBlogs;
