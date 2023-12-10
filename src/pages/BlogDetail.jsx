@@ -1,6 +1,6 @@
 // FetchBlogs.jsx
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "axios"; 
 import "../css/fetchCard.css";
 import loader from "../assets/images/loader.gif";
 import { useParams } from "react-router-dom";

@@ -17,7 +17,7 @@ const NavbarComponent = () => {
     setAuth({ ...auth, auth: null, token: "" });
     localStorage.removeItem("auth");
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
   return (
     <div>

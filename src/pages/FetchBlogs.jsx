@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const FetchBlogs = () => {
-  const { data, loading, published } = useAuth()
+  const {  loading, published } = useAuth()
   const allBlogs = published.blogs
-  console.log(allBlogs);
+  // console.log(allBlogs);
   return (
     <div className="" style={{ marginTop: "3rem" }}>
       <h1 className="bg-success text-light">Trending</h1>
@@ -19,9 +19,9 @@ const FetchBlogs = () => {
         </div>
       )}
       {allBlogs && (
-        <div className="data row">
+        <div className="blog-container">
           {allBlogs.map((blog) => (
-            <div className="" key={blog._id}>
+            <div className="shadow  p-3" key={blog._id}>
             <Link className="bg-primary"  to={`/blog/${blog._id}`}>
               <BlogCard {...blog} />
             </Link>

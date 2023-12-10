@@ -48,7 +48,35 @@
     border-radius: 5px;
 }
 
+.swiper-container{
+    height: 600px;
+}
+
+.swiper-container > img{
+    height: 300px;
+}
+
+.swiper-mobile{
+    display: none;
+}
+
+.swiper-link{
+    text-decoration: none !important;
+    outline: none !important;
+    /* display: none; */
+    color: #2b2a2a;
+}
+
+
 @media(max-width:768px){
+    .swiper-mobile{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .swiper-lg{
+        display: none;
+    }
     .self-defence{
         width: 100%;
         display: flex;

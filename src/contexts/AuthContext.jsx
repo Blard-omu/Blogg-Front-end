@@ -15,27 +15,19 @@ const AuthProvider = ({ children }) => {
   axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_API_URL;
   axios.defaults.headers.common["Authorization"] = auth?.token;
 
-  const [data, setData] = useState([]);
   const [published, setPublished] = useState([]);
-  const [draft, setDraft] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchApi = async (state, author) => {
+  const fetchApi = async () => {
     try {
       const response = await axios.get("/blogs/all", {
         params: {
-          state,
-          author,
+          state: "published"
         },
       });
 
       const blogs = response.data;
-
-      if (state === "published") {
-        setPublished(blogs);
-      } else if (state === "draft") {
-        setDraft(blogs);
-      }
+      setPublished(blogs);
 
       setLoading(false);
     } catch (err) {
@@ -44,8 +36,6 @@ const AuthProvider = ({ children }) => {
   };
 
   console.log(published);
-  console.log(draft);
-
   useEffect(() => {
     const authData = localStorage.getItem("auth");
     if (authData) {
@@ -53,17 +43,16 @@ const AuthProvider = ({ children }) => {
       setAuth({ ...auth, user: parsedAuth.user, token: parsedAuth.token });
       setUser(parsedAuth.user);
 
-      fetchApi("published", user?.username);
+      fetchApi(); 
 
-      fetchApi("draft", user?.username);
     }
   }, []);
   // console.log(user);
-  console.log(user?.username);
+  // console.log(user?.username);
 
   return (
     <AuthContext.Provider
-      value={{ loading, data, user, auth, setAuth, published, draft }}
+      value={{ loading, user, auth, setAuth, published }}
     >
       {children}
     </AuthContext.Provider>

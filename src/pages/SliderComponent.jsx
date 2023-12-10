@@ -5,14 +5,14 @@ import "swiper/css";
 import SwiperCard from "../components/SwiperCard";
 import "swiper/css/navigation";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const SliderComponent = (props) => {
   const { tag = "Sport", bg = "#6726d2" } = props;
   const { published } = useAuth();
-  // console.log(data);
-  console.log(published.blogs);
-  const blog = published.blogs
-
+  // console.log(published?.blogs);
+  const blog = published?.blogs;
+  console.log(blog);
 
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -25,15 +25,26 @@ const SliderComponent = (props) => {
           {tag}
         </span>
       </div>
-      <Swiper spaceBetween={50} slidesPerView={2.5}>
+      <Swiper className="swiper-lg" spaceBetween={50} slidesPerView={2}>
         {blog.map((item) => {
           return (
             <SwiperSlide key={item._id}>
-              <SwiperCard {...item} />
+              <Link className="swiper-link" to={`/blog/${item._id}`}>
+                <SwiperCard {...item} />
+              </Link>
             </SwiperSlide>
           );
         })}
       </Swiper>
+      <div className="row swiper-mobile">
+        {blog.map((item) => {
+          return (
+            <div className="" key={item._id}>
+              <SwiperCard {...item} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

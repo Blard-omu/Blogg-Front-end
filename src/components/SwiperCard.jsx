@@ -15,7 +15,7 @@ const SwiperCard = ({
   return (
     <>
       <div className="swiper-container" key={_id}>
-        <img src={imageUrl} alt="" />
+        <img src={imageUrl} alt="" className="w-100"/>
         <div className="self-defence">
           <div className="views ms-2">
             <img src={viewss} alt="view_icon" />
@@ -29,7 +29,7 @@ const SwiperCard = ({
         </div>
         <div className="trending-down mt-3">
           <h4>{title}</h4>
-          <p>{content}</p>
+          <p>{content.slice(0,150)}</p>
         </div>
       </div>
     </>
