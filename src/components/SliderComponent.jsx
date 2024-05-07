@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../css/SwiperCard.css";
 import "swiper/css";
-import SwiperCard from "../components/SwiperCard";
+import SwiperCard from "./SwiperCard";
 import "swiper/css/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
