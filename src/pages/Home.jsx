@@ -2,7 +2,7 @@ import React from "react";
 import Hero from "./Hero";
 import Container from "react-bootstrap/Container";
 import Trending from "./Trending";
-import SliderComponent from "./SliderComponent";
+import SliderComponent from "../components/SliderComponent";
 import { useAuth } from "../contexts/AuthContext";
 import CustomLoader from "../components/Loader";
 
@@ -23,7 +23,8 @@ const Home = () => {
       <div className="line" style={line}></div>
       <Container className="">
         {loading ? (
-          <CustomLoader />
+          <CustomLoader /> 
+          // <p>loading</p>
         ) : (
           <>
             <Trending />
