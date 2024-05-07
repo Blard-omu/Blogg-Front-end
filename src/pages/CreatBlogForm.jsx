@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import "../css/createblog.css";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -12,11 +13,13 @@ const CreateBlog = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("auth");
-    const parsedUsername = storedUsername ? JSON.parse(storedUsername).user.username : "";
+    const parsedUsername = storedUsername
+      ? JSON.parse(storedUsername).user.username
+      : "";
     setAuthor(parsedUsername);
   }, []);
 
@@ -36,9 +39,8 @@ const CreateBlog = () => {
 
       if (data?.message === "Blog created successfully") {
         toast.success("Blog created successfully");
-        navigate('/')
+        navigate("/");
         setLoading(false);
-        
       } else {
         toast.error("Failed to create a blog");
         setLoading(false);
@@ -54,40 +56,44 @@ const CreateBlog = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-center bg-primary text-light">Create Blog</h1>
-      <form className="col-12 col-md-6 offset-md-3" onSubmit={handleSubmit}>
-        <div className="form-control">
+    <div style={{ paddingTop: "120px" }}>
+      <h1 className="">Create A New Blog</h1>
+      <form className="" onSubmit={handleSubmit}>
+        <div className="create-input">
+          <label>Title</label>
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Title..."
+            placeholder="Enter title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
+        <div className="create-input">
+          <label>Category</label>
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Category"
+            placeholder="Enter category here"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
+        <div className="create-input">
+          <label>Tags</label>
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Tags"
+            placeholder="Enter tags here"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             required
           />
         </div>
-        <div className="form-control my-3">
+        <div className="create-input">
+          <label>Author</label>
           <input
             className="form-control p-3"
             type="text"
@@ -98,7 +104,19 @@ const CreateBlog = () => {
             disabled
           />
         </div>
-        <div className="form-control">
+        <div className="create-input">
+          <label>Upload blog image</label>
+          <input
+            className="form-control file"
+            type="file"
+            aria-label="File browser example"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            required
+            placeholder=""
+          />
+        </div>
+        <div className="create-input">
           <textarea
             className="form-control"
             placeholder="Type content..."
@@ -107,16 +125,8 @@ const CreateBlog = () => {
             required
           />
         </div>
-        <div className="form-control my-3">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-            required
-          />
-        </div>
         <button className="btn btn-primary" type="submit">
-          { loading ? 'Loading' : 'Create'}
+          {loading ? "Loading" : "Create"}
         </button>
       </form>
     </div>

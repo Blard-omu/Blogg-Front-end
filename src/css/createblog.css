@@ -1,0 +1,13 @@
+.create-input{
+    margin-top: 20px;
+}
+.create-input label{
+    font-size: 18px;
+    font-weight: 600;
+}
+.create-input input{
+    border: 2px solid gray;
+}
+.create-input .file{
+    text-align: end;
+}

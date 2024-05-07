@@ -20,6 +20,8 @@ const Login = () => {
   const [password, setPassword] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
+
 
   const { auth, setAuth } = useAuth();
   // handling form submission
@@ -31,6 +33,7 @@ const Login = () => {
     }
 
     try {
+      setLoading(true)
       const { data } = await axios.post(`/login`, {
         email,
         password,
@@ -38,20 +41,24 @@ const Login = () => {
 
       if (data?.error) {
         toast.success(data.error);
+        setLoading(false)
       } else {
         localStorage.setItem("auth", JSON.stringify(data));
         localStorage.setItem("token", data.token);
         setAuth({ ...auth, token: data.token, user: data.user });
         toast.success("Login successful");
         navigate("/");
+        setLoading(false)
       }
     } catch (err) {
       if (err?.response?.data) {
         const { error } = err.response.data;
         setError(error);
         toast.error(error);
+        setLoading(false)
       } else {
         toast.error("Login failed");
+        setLoading(false)
       }
     }
   };
@@ -100,7 +107,7 @@ const Login = () => {
                 )}
               </span>
             </div>
-            <button className="login-btn">Sign in</button>
+            <button className="login-btn">{loading ? 'Loading...' : 'Sign In' }</button>
           </form>
           <div className="line">
           <span className="login-border"></span>
