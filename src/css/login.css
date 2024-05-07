@@ -73,6 +73,7 @@ p {
 }
 .box-auth span img {
   width: 50%;
+  height: 80%;
 }
 .show {
   position: relative;
@@ -83,7 +84,7 @@ p {
   right: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
     .m-main {
         height: auto;
     }
@@ -93,6 +94,7 @@ p {
   }
   .right-login-content {
     width: 100%;
+    padding-bottom: 40px;
   }
   .form-login {
     width: 100%;
@@ -101,8 +103,12 @@ p {
   .box-auth {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 72px;
+    height: 70px;
     width: 80%;
     gap: 30px;
+  }
+  .box-auth span img {
+    width: 40%;
+    height: 80%;
   }
 }
