@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="container">
       <BrowserRouter>
-        <Navbar />
+        <Navbar/>
         <Toaster />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,7 +32,7 @@ function App() {
           <Route path="/" element={<PrivateRoutes />}>
             <Route path="profile" element={<Profile />} />
             <Route path="create" element={<CreateBlog />} />
-            <Route path="blog/update" element={<BlogUpdate/>} />
+            <Route path="blog/update/:_id" element={<BlogUpdate/>} />
           </Route>
         </Routes>
       </BrowserRouter>

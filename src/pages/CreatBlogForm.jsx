@@ -36,7 +36,7 @@ const CreateBlog = () => {
 
       if (data?.message === "Blog created successfully") {
         toast.success("Blog created successfully");
-        navigate('/')
+        navigate('/profile')
         setLoading(false);
         
       } else {
@@ -45,6 +45,7 @@ const CreateBlog = () => {
       }
     } catch (err) {
       if (err?.response?.data) {
+        // console.log(err);
         const { error } = err.response.data;
         toast.error(error);
       } else {

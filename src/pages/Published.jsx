@@ -1,8 +1,8 @@
-// Published.jsx
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
+import BlogCard from "../components/FetchBlogCard";
+import { Link } from "react-router-dom";
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
@@ -38,15 +38,17 @@ const Published = () => {
   return (
     <div>
       <h2>Published Blogs</h2>
-      {publishedBlogs.map((blog) => (
-        <div key={blog._id}>
-          <h3>{blog.title}</h3>
-          <p>{blog.content}</p>
-          <b>{blog.author}</b>
-          <br />
-          <em>{blog.state}</em>
+      {publishedBlogs && (
+        <div className="blog-container">
+          {publishedBlogs.map((blog) => (
+            <div className="shadow  p-3" key={blog._id}>
+              <Link className="bg-primary" to={`/blog/${blog._id}`}>
+                <BlogCard {...blog} />
+              </Link>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
