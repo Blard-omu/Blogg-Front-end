@@ -19,6 +19,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
 
 
   const handleSubmit = async (e) => {
@@ -36,6 +37,7 @@ const Register = () => {
     }
 
     try {
+      setLoading(true)
       // Sending a request for registration
       const { data } = await axios.post(`/register`, {
         username,
@@ -45,6 +47,7 @@ const Register = () => {
       // Check for a success message or response
       if (!data?.error) {
         toast.success("Registration successful");
+        setLoading(false)
         navigate("/login");
       } else {
         toast.error(data.error);
@@ -56,8 +59,10 @@ const Register = () => {
           return toast.error(error);
         }
         toast.error(error);
+        setLoading(false)
       } else {
         toast.error("Registration failed");
+        setLoading(false)
       }
     }
   };
@@ -118,7 +123,7 @@ const Register = () => {
                 )}
               </span>
             </div>
-            <button className="login-btn">Sign in</button>
+            <button className="login-btn">{loading ? 'Loading...' : 'Sign up' }</button>
           </form>
           <div className="line">
             <span className="login-border"></span>
