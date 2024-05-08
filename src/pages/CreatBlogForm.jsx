@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import "../css/createblog.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -11,6 +14,11 @@ const CreateBlog = () => {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,32 +32,38 @@ const CreateBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("content", content);
-      formData.append("category", category);
-      formData.append("tags", tags);
-      formData.append("imageUrl", image);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    formData.append("tags", tags);
+    formData.append("author", author);
+    formData.append("imageUrl", image);
 
-      const response = await axios.post("/create", formData, {
+    try {
+      setLoading(true)
+
+      const { data } = await axios.post("/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response?.data?.success) {
+      if (data?.success) {
         toast.success("Blog created successfully");
         navigate("/profile");
+        navigate("/");
+        setLoading(false);
       } else {
         toast.error("Failed to create blog");
       }
-    } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.error || "Failed to create blog");
+    }catch (err) {
+      if (err?.response?.data) {
+        const error  = err.response.data.error;
+        toast.error(error);
+        setLoading(false);
       } else {
-        toast.error("Failed to create blog");
+        toast.error("Fail to create blog");
       }
     } finally {
       setLoading(false);
@@ -57,30 +71,33 @@ const CreateBlog = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-center bg-primary text-light">Create Blog</h1>
-      <form className="col-12 col-md-6 offset-md-3" onSubmit={handleSubmit}>
-        <div className="form-control">
+    <div style={{ paddingTop: "120px" }}>
+      <h1 className="">Create A New Blog</h1>
+      <form className="" onSubmit={handleSubmit}>
+        <div className="create-input">
+          <label>Title</label>
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Title..."
+            placeholder="Enter title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
+        <div className="create-input">
+          <label>Category</label>
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Category"
+            placeholder="Enter category here"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
+        {/* <div className="create-input">
+          <label>Tags</label>
           <input
             className="form-control p-3"
             type="text"
@@ -89,38 +106,72 @@ const CreateBlog = () => {
             // onChange={(e) => setCategory(e.target.value)}
             disabled
           />
-        </div>
+        </div> */}
         <div className="form-control">
           <input
             className="form-control p-3"
             type="text"
-            placeholder="Tags"
+            placeholder="Enter tags here"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
+        <div className="create-input">
+          <label>Author</label>
+          <input
+            className="form-control p-3"
+            type="text"
+            placeholder="Author"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
+            disabled
+          />
+        </div>
+        <div className="create-input">
+          <label>Upload blog image</label>
+          <input
+            className="form-control file"
+            type="file"
+            aria-label="File browser example"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            required
+            placeholder=""
+          />
+        </div>
+        <div className="create-input">
+          <label>Story</label>
           <textarea
             className="form-control"
-            placeholder="Type content..."
+            placeholder="Write your story here"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
           />
         </div>
-        <div className="form-control">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-        </div>
         <button className="btn btn-primary" type="submit" disabled={loading}>
           {loading ? "Loading..." : "Create"}
-        </button>
+          </button>
       </form>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
+    
   );
 };
 

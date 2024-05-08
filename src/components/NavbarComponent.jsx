@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
 import "../css/Navbar.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +14,11 @@ const NavbarComponent = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const line = {
-    width: "100%",
-    border: "1px solid #26bdd2",
-    margin: "4rem 0",
-  };
+  // const line = {
+  //   width: "100%",
+  //   border: "1px solid #26bdd2",
+  //   margin: "4rem 0",
+  // };
 
   const logout = () => {
     setAuth({ ...auth, auth: null, token: "" });
@@ -25,10 +26,25 @@ const NavbarComponent = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+  const line = {
+    width: "100%",
+    border: "1px solid #26bdd2",
+  };
+  const header = {
+    position: "fixed",
+    width: "100%",
+    background: "white",
+    top: "0px",
+    zIndex: 9999,
+  };
+
   return (
-    <div>
-      <Navbar expand="lg" className=" p-3 fixed-top">
-        <Container className="">
+    <>
+      <div className="" style={header}>
+        <Navbar
+          expand="lg"
+          style={{ minHeight: "100px", width: "100%", padding: "0px 10px" }}
+        >
           <Navbar className="logo" href="#">
             BLOGG
           </Navbar>
@@ -46,14 +62,17 @@ const NavbarComponent = () => {
 
             {auth?.token ? (
               <>
-                <b>{auth.user.username.toUpperCase()}</b>
-                <NavDropdown title="" id="navbarScrollingDropdown" align="end"
-                className="dropdown-menu-center">
-                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">Settings</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logout} className="text-danger">Logout</NavDropdown.Item>
-                </NavDropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant=" " id="dropdown-basic">
+                    <b>{auth.user.username.toUpperCase()}</b>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Settings</Dropdown.Item>
+                    <NavDropdown.Divider />
+                    <Dropdown.Item onClick={logout} className="text-danger">Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </>
             ) : (
               <>
@@ -66,10 +85,10 @@ const NavbarComponent = () => {
               </>
             )}
           </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <div className="line" style={line}></div>
-    </div>
+        </Navbar>
+        <div className="" style={line}></div>
+      </div>
+    </>
   );
 };
 

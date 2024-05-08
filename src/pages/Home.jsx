@@ -16,8 +16,8 @@ const Home = () => {
   };
   return (
     <>
-      {/* <div className="line" style={line}></div> */}
-      <Container className="">
+      <div style={{paddingTop: '90px'}}></div>
+      <Container className="container">
         <Hero />
       </Container>
       <div className="line" style={line}></div>

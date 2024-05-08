@@ -13,30 +13,29 @@ import FetchBlogs from "./pages/FetchBlogs";
 import BlogDetail from "./pages/BlogDetail";
 import SearchBlog from "./pages/SearchBlog";
 
-
 function App() {
   return (
-    <div className="container">
-      <BrowserRouter>
-        <Navbar/>
-        <Toaster />
-        <Routes>
+    <BrowserRouter>
+      <Navbar />
+      <Toaster />
+        <div className="container">
+      <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/blogs" element={<FetchBlogs/>} />
-          <Route path="/blog/:_id" element={<BlogDetail/>} />
-          <Route path="/blogs/search" element={<SearchBlog/>} />
+          <Route path="/blogs" element={<FetchBlogs />} />
+          <Route path="/blog/:_id" element={<BlogDetail />} />
+          <Route path="/blogs/search" element={<SearchBlog />} />
 
           {/* Protected Routes */}
           <Route path="/" element={<PrivateRoutes />}>
             <Route path="profile" element={<Profile />} />
             <Route path="create" element={<CreateBlog />} />
-            <Route path="blog/update/:_id" element={<BlogUpdate/>} />
+            <Route path="blog/update" element={<BlogUpdate />} />
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+      </Routes>
+        </div>
+    </BrowserRouter>
   );
 }
 
