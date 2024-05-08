@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
+import BlogCard from "../components/FetchBlogCard";
+import { Link } from "react-router-dom";
+import "../css/fetchCard.css"
 
 const DraftBlogs = () => {
   const [draftBlogs, setDraftBlogs] = useState([]);
@@ -24,7 +27,7 @@ const DraftBlogs = () => {
         setDraftBlogs(response.data.blogs);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching published blogs:", error);
+        console.error("Error fetching published blogs: ", error);
       }
     };
 
@@ -38,14 +41,17 @@ const DraftBlogs = () => {
   return (
     <div>
       <h2>Draft Blogs</h2>
-      {draftBlogs.map((blog) => (
-        <div key={blog._id}>
-          <h3>{blog.title}</h3>
-          <p>{blog.content}</p>
-          <b>{blog.author}</b> <br />
-          <em>{blog.state}</em>
+      {draftBlogs && (
+        <div className="blog-container">
+          {draftBlogs.map((blog) => (
+            <div className="shadow  p-3" key={blog._id}>
+              <Link className="bg-primary" to={`/blog/update/${blog._id}`}>
+                <BlogCard {...blog} />
+              </Link>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };

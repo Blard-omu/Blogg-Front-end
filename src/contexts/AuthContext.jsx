@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
     const authData = localStorage.getItem("auth");
     if (authData) {
       const parsedAuth = JSON.parse(authData);
-      setAuth({ ...auth, user: parsedAuth.user, token: parsedAuth.token });
+      setAuth({ ...auth, user: parsedAuth.user, token: parsedAuth?.token });
       setUser(parsedAuth.user);
 
       fetchApi(); 
@@ -49,6 +49,7 @@ const AuthProvider = ({ children }) => {
   }, []);
   // console.log(user);
   // console.log(user?.username);
+  // console.log(auth.token);
 
   return (
     <AuthContext.Provider

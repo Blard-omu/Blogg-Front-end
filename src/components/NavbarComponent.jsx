@@ -14,6 +14,12 @@ const NavbarComponent = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
+  // const line = {
+  //   width: "100%",
+  //   border: "1px solid #26bdd2",
+  //   margin: "4rem 0",
+  // };
+
   const logout = () => {
     setAuth({ ...auth, auth: null, token: "" });
     localStorage.removeItem("auth");

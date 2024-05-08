@@ -1,14 +1,24 @@
-import React from 'react'
-import Published from './Published'
-import DraftBlogs from './DraftBlogs'
+import React, { useState } from "react";
+import Published from "./Published";
+import DraftBlogs from "./DraftBlogs";
 
 const Profile = () => {
+  const [page, setPage] = useState("published");
+
+  const toggleBtn = () => {
+    setPage((prevPage) => (prevPage === "published" ? "drafts" : "published"));
+  };
+
   return (
     <div>
-      <Published/>
-      <DraftBlogs/>
-    </div>
-  )
-}
+      <div>
+        <button className="btn btn-primary" onClick={toggleBtn}>{page === "published" ? "Published" : "Draft"}</button>
+        {page === "published" ? <Published /> : <DraftBlogs />}
+      </div>
 
-export default Profile
+      
+    </div>
+  );
+};
+
+export default Profile;

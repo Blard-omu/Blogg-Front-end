@@ -12,7 +12,6 @@ const CreateBlog = () => {
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
-  const [readTime, setReadTime] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -38,30 +37,36 @@ const CreateBlog = () => {
     formData.append("content", content);
     formData.append("category", category);
     formData.append("tags", tags);
-    formData.append("read_time", readTime);
     formData.append("author", author);
     formData.append("imageUrl", image);
 
     try {
       setLoading(true)
-      const { data } = await axios.post("/create", formData);
 
-      if (data?.message === "Blog created successfully") {
+      const { data } = await axios.post("/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (data?.success) {
         toast.success("Blog created successfully");
+        navigate("/profile");
         navigate("/");
         setLoading(false);
       } else {
-        toast.error("Failed to create a blog");
-        setLoading(false);
+        toast.error("Failed to create blog");
       }
-    } catch (err) {
+    }catch (err) {
       if (err?.response?.data) {
-        const error  = err.response.data;
+        const error  = err.response.data.error;
         toast.error(error);
         setLoading(false);
       } else {
         toast.error("Fail to create blog");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,25 +96,24 @@ const CreateBlog = () => {
             required
           />
         </div>
-        <div className="create-input">
+        {/* <div className="create-input">
           <label>Tags</label>
+          <input
+            className="form-control p-3"
+            type="text"
+            placeholder="Author"
+            value={author}
+            // onChange={(e) => setCategory(e.target.value)}
+            disabled
+          />
+        </div> */}
+        <div className="form-control">
           <input
             className="form-control p-3"
             type="text"
             placeholder="Enter tags here"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            required
-          />
-        </div>
-        <div className="create-input">
-          <label>Read Time</label>
-          <input
-            className="form-control p-3"
-            type="text"
-            placeholder="Enter read time"
-            value={readTime}
-            onChange={(e) => setReadTime(e.target.value)}
             required
           />
         </div>
@@ -147,10 +151,11 @@ const CreateBlog = () => {
             required
           />
         </div>
-        <button className="create-btn" type="submit">
-          {loading ? "Loading..." : "Publish"}
-        </button>
+        <button className="btn btn-primary" type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Create"}
+          </button>
       </form>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
