@@ -70,7 +70,7 @@ const NavbarComponent = () => {
               </>
             ) : (
               <>
-                <Button className=" button-primary">
+                <Button className="button-primary">
                   <Nav.Link href="/register">Get Started</Nav.Link>
                 </Button>
                 <div className="ms-4">

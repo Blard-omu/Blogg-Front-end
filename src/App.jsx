@@ -12,6 +12,7 @@ import BlogUpdate from "./pages/UpdateBlog";
 import FetchBlogs from "./pages/FetchBlogs";
 import BlogDetail from "./pages/BlogDetail";
 import SearchBlog from "./pages/SearchBlog";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           </Route>
       </Routes>
         </div>
+        <Footer/>
     </BrowserRouter>
   );
 }
