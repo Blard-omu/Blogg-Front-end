@@ -11,46 +11,48 @@ const CreateBlog = () => {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("auth");
-    const parsedUsername = storedUsername ? JSON.parse(storedUsername).user.username : "";
+    const parsedUsername = storedUsername
+      ? JSON.parse(storedUsername).user.username
+      : "";
     setAuthor(parsedUsername);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("category", category);
-    formData.append("tags", tags);
-    formData.append("author", author);
-    formData.append("imageUrl", image);
-
     try {
-      const { data } = await axios.post("/create", formData);
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("category", category);
+      formData.append("tags", tags);
+      formData.append("imageUrl", image);
 
-      if (data?.message === "Blog created successfully") {
+      const response = await axios.post("/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response?.data?.success) {
         toast.success("Blog created successfully");
-        navigate('/profile')
-        setLoading(false);
-        
+        navigate("/profile");
       } else {
-        toast.error("Failed to create a blog");
-        setLoading(false);
+        toast.error("Failed to create blog");
       }
-    } catch (err) {
-      if (err?.response?.data) {
-        // console.log(err);
-        const { error } = err.response.data;
-        toast.error(error);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.error || "Failed to create blog");
       } else {
-        toast.error("Login failed");
+        toast.error("Failed to create blog");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,21 +84,20 @@ const CreateBlog = () => {
           <input
             className="form-control p-3"
             type="text"
+            placeholder="Author"
+            value={author}
+            // onChange={(e) => setCategory(e.target.value)}
+            disabled
+          />
+        </div>
+        <div className="form-control">
+          <input
+            className="form-control p-3"
+            type="text"
             placeholder="Tags"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             required
-          />
-        </div>
-        <div className="form-control my-3">
-          <input
-            className="form-control p-3"
-            type="text"
-            placeholder="Author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-            disabled
           />
         </div>
         <div className="form-control">
@@ -108,16 +109,15 @@ const CreateBlog = () => {
             required
           />
         </div>
-        <div className="form-control my-3">
+        <div className="form-control">
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
-            required
           />
         </div>
-        <button className="btn btn-primary" type="submit">
-          { loading ? 'Loading' : 'Create'}
+        <button className="btn btn-primary" type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Create"}
         </button>
       </form>
     </div>
