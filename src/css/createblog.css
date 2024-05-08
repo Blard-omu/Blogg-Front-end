@@ -1,13 +1,28 @@
-.create-input{
-    margin-top: 20px;
+.create-input {
+  margin-top: 20px;
 }
-.create-input label{
-    font-size: 18px;
-    font-weight: 600;
+.create-input label {
+  font-size: 18px;
+  font-weight: 600;
 }
-.create-input input{
-    border: 2px solid gray;
+.create-input input {
+  border: 2px solid gray;
 }
-.create-input .file{
-    text-align: end;
+.create-input .file {
+  text-align: end;
 }
+.create-btn {
+  width: 40%;
+  height: 56px;
+  background-color: #26bdd2;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 43px;
+  margin-top: 20px;
+}
+
+@media (max-width: 1080px) {
+    
+}
+
+

@@ -3,6 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "../css/createblog.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -10,8 +12,13 @@ const CreateBlog = () => {
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
+  const [readTime, setReadTime] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
 
@@ -31,15 +38,18 @@ const CreateBlog = () => {
     formData.append("content", content);
     formData.append("category", category);
     formData.append("tags", tags);
+    formData.append("read_time", readTime);
     formData.append("author", author);
     formData.append("imageUrl", image);
 
     try {
-      const { data } = await axios.post("/create", formData);
+      setLoading(true)
+      const { data } = await axios.post("blog/create", formData);
 
       if (data?.message === "Blog created successfully") {
         toast.success("Blog created successfully");
         navigate("/");
+        handleShow()
         setLoading(false);
       } else {
         toast.error("Failed to create a blog");
@@ -47,10 +57,11 @@ const CreateBlog = () => {
       }
     } catch (err) {
       if (err?.response?.data) {
-        const { error } = err.response.data;
+        const error  = err.response.data;
         toast.error(error);
+        setLoading(false);
       } else {
-        toast.error("Login failed");
+        toast.error("Fail to create blog");
       }
     }
   };
@@ -93,6 +104,17 @@ const CreateBlog = () => {
           />
         </div>
         <div className="create-input">
+          <label>Read Time</label>
+          <input
+            className="form-control p-3"
+            type="text"
+            placeholder="Enter read time"
+            value={readTime}
+            onChange={(e) => setReadTime(e.target.value)}
+            required
+          />
+        </div>
+        <div className="create-input">
           <label>Author</label>
           <input
             className="form-control p-3"
@@ -117,19 +139,35 @@ const CreateBlog = () => {
           />
         </div>
         <div className="create-input">
+          <label>Story</label>
           <textarea
             className="form-control"
-            placeholder="Type content..."
+            placeholder="Write your story here"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
           />
         </div>
-        <button className="btn btn-primary" type="submit">
-          {loading ? "Loading" : "Create"}
+        <button className="create-btn" type="submit">
+          {loading ? "Loading..." : "Publish"}
         </button>
       </form>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
+    
   );
 };
 
