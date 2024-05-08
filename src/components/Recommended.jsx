@@ -16,14 +16,13 @@ const Recommended = ({ sameCategory }) => {
 
   return (
     <>
-      {sameCategory.length > 0 ? <h1>Recommended</h1> : ""}
       <div className="">
         {sameCategory.map((b, i) => (
           <Link className="link" to={`/blog/${b._id}`} key={b._id}>
             <div className="blog-card-recom">
               <img src={b.imageUrl} alt={b.title} />
               <div className="content-recom">
-                <p>
+                <div className="content-info">
                   <span>
                     <MdOutlineRemoveRedEye />
                     views
@@ -38,7 +37,7 @@ const Recommended = ({ sameCategory }) => {
                       .split("T")[0]
                       .replace(/-/g, "/")}
                   </span>
-                </p>
+                </div>
               </div>
               <h3>{b.title}</h3>
               <p>

@@ -22,7 +22,7 @@ const FetchBlogs = () => {
         <div className="blog-container">
           {allBlogs.map((blog) => (
             <div className="shadow  p-3" key={blog._id}>
-            <Link className="bg-primary"  to={`/blog/${blog._id}`}>
+            <Link className="link"  to={`/blog/${blog._id}`}>
               <BlogCard {...blog} />
             </Link>
             </div>

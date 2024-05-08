@@ -44,12 +44,11 @@ const CreateBlog = () => {
 
     try {
       setLoading(true)
-      const { data } = await axios.post("blog/create", formData);
+      const { data } = await axios.post("/create", formData);
 
       if (data?.message === "Blog created successfully") {
         toast.success("Blog created successfully");
         navigate("/");
-        handleShow()
         setLoading(false);
       } else {
         toast.error("Failed to create a blog");

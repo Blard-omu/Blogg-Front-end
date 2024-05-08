@@ -12,7 +12,7 @@ const BlogCard = ({
 }) => {
   return (
     <>
-      <div className="" key={_id}>
+      <div className="blog-card" key={_id}>
         <div className="card-img">
           <img src={imageUrl} alt="" />
         </div>

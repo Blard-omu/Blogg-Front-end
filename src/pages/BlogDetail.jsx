@@ -46,7 +46,14 @@ const BlogDetail = () => {
         </div>
       )}
       {data && <BlogDetailCard {...data} />}
-      <Recommended sameCategory={sameCategory} />
+      {sameCategory.length > 0 ? <h1>Recommended</h1> : ""}
+      <div className="recommend-grid">
+        <Recommended sameCategory={sameCategory} />
+        <Recommended sameCategory={sameCategory} />
+        <Recommended sameCategory={sameCategory} />
+        <Recommended sameCategory={sameCategory} />
+        <Recommended sameCategory={sameCategory} />
+      </div>
     </div>
   );
 };
