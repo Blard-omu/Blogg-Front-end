@@ -13,6 +13,7 @@ const BlogDetailCard = ({
   content,
   views,
   category,
+  createdAt
 }) => {
   return (
     <>
@@ -33,7 +34,10 @@ const BlogDetailCard = ({
             <span className="ms-2">{read_time ? read_time : 2} mins read</span>
           </div>
           <span className="date-detail">
-            {published_date ? published_date : "23/11/2023"}
+            {createdAt ? new Date(createdAt)
+                      .toISOString()
+                      .split("T")[0]
+                      .replace(/-/g, "/") : '2023/02/11'}
           </span>
         </div>
         <div className="detail-content">
