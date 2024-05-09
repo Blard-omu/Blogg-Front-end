@@ -1,0 +1,23 @@
+.toggle-btn{
+    width:21rem;
+    height: 3.4rem;
+    border-bottom: 3px solid #26BDD2
+}
+.toggle-bttn{
+    width: 10rem;
+    height: 2.8rem;
+    background: none !important;
+    border-radius: 15px 15px 0px 0px;
+    font-weight: 600;
+    font-size: 24px;
+    
+    
+   
+}
+.active{
+    background-color:  #26BDD2 !important; 
+    color: #FFFFFF;
+}
+.draft{
+    background-color:  #26BDD2 !important;
+}

@@ -9,16 +9,22 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "../css/Navbar.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Modal from "./Modal";
 
 const NavbarComponent = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  // const line = {
-  //   width: "100%",
-  //   border: "1px solid #26bdd2",
-  //   margin: "4rem 0",
-  // };
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const logout = () => {
     setAuth({ ...auth, auth: null, token: "" });
@@ -70,13 +76,15 @@ const NavbarComponent = () => {
                     <Dropdown.Item href="/profile">Profile</Dropdown.Item>
                     <Dropdown.Item href="#/action-2">Settings</Dropdown.Item>
                     <NavDropdown.Divider />
-                    <Dropdown.Item onClick={logout} className="text-danger">Logout</Dropdown.Item>
+                    <Dropdown.Item onClick={logout} className="text-danger">
+                      Logout
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
               <>
-                <Button className=" button-primary">
+                <Button className="button-primary">
                   <Nav.Link href="/register">Get Started</Nav.Link>
                 </Button>
                 <div className="ms-4">
@@ -87,6 +95,15 @@ const NavbarComponent = () => {
           </Navbar.Collapse>
         </Navbar>
         <div className="" style={line}></div>
+        <button onClick={handleOpenModal}>Open Modal</button>
+        {modalOpen && (
+          <Modal onClose={handleCloseModal}>
+            <div>
+              <h2>Modal Content</h2>
+              <p>This is some modal content.</p>
+            </div>
+          </Modal>
+        )}
       </div>
     </>
   );

@@ -1,0 +1,129 @@
+.footer{
+    height: auto;
+    width: 100%;
+    background-color: #2B2A2A;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+    padding: 30px 0 20px 0;
+}
+.footer-content{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 150px;
+    
+}
+.footer-content h1{
+    font-size: 72px;
+}
+.footer-content label{
+    border: 1px solid  #26bdd2;
+    padding: 4px;
+    width: 100%;
+    border-radius: 30px;
+    height: 54px;
+}
+.footer-content input, .footer-content input:focus{
+    width: 65%;
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    padding-left: 20px;
+    border-radius: 30px;
+    color: white;
+}
+.footer-btn{
+    width: 35%;
+    height: 100%;
+    border-radius: 30px;
+    background-color:#26bdd2;
+    color: white;
+    font-weight: 500;
+}
+
+.footer-content h4{
+    margin-bottom: 20px;
+}
+
+.footer-content li{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.footer-content .footer-link{
+    color: white;
+    cursor: pointer;
+}
+.footer-end{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+.footer-end .right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.footer-end .right span{
+    cursor: pointer;
+}
+@media (max-width: 320px) {
+    .footer{
+        height: auto;
+        width: 100%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 40px;
+        padding: 20px 0;
+    }
+    .footer-content{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        
+    }
+    .footer-content label{
+        width: 100%;
+    }
+    .footer-end .right{
+        font-size: 10px;
+        gap: 6px;
+    }
+
+}
+@media (min-width: 321px) and (max-width: 1028px) {
+    .footer{
+        height: auto;
+        width: 100%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 40px;
+        padding: 20px 0;
+    }
+    .footer-content{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        
+    }
+    .footer-content label{
+        width: 70%;
+    }
+    .footer-end .right{
+        font-size: 10px;
+        gap: 6px;
+    }
+
+}
