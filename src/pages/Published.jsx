@@ -7,7 +7,7 @@ import "../css/Published.css"
 import View from '../assets/images/ep_view.png'
 import Dots from '../assets/images/quill_meatballs-v.png'
 import Dot from '../assets/images/dot.png'
-import { Modal, Button } from 'react-bootstrap'; 
+// import { Modal, Button } from 'react-bootstrap'; 
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
@@ -99,7 +99,7 @@ const Published = () => {
         </div>
       </div>
        ))}
-       <>
+       {/* <>
        <Modal show={showModal} onHide={handleCloseModal} centered className="">
         <Modal.Header closeButton>
           <Modal.Title></Modal.Title>
@@ -117,7 +117,7 @@ const Published = () => {
        
         </Modal.Body>
       </Modal>
-       </>
+       </> */}
     </div>
   );
 };

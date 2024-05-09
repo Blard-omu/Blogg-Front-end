@@ -30,7 +30,7 @@ function App() {
 
           {/* Protected Routes */}
           <Route path="/" element={<PrivateRoutes />}>
-            <Route path="profile/:userId" element={<Profile />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="create" element={<CreateBlog />} />
             <Route path="blog/update" element={<BlogUpdate />} />
           </Route>

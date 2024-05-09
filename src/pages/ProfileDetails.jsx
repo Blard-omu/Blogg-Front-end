@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 // import Profilepics from "../assets/images/Ellipse 3.png"
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "../css/ProfileDetails.css"
 import axios from "axios";
 import Dot from '../assets/images/dot.png'
 
 const ProfileDetails = () => {
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
+
+    const { user } = useAuth();
     useEffect(() => {
     const fetchProfileDetails = async () => {
         try {
-          const response = await axios.get(`/user/${userId}`);
+          const response = await axios.get(`/user/${user}`);
   
           setProfile(response.data);
           console.log(response.data);
@@ -23,7 +26,7 @@ const ProfileDetails = () => {
       };
   
       fetchProfileDetails();
-    }, [userId]);
+    }, [user]);
     
     if (loading) {
         return <div>Loading...</div>;
