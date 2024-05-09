@@ -1,0 +1,29 @@
+.published-main{
+    width: 73rem;
+    height: 22rem;
+}
+.published-img{
+    width:30%
+}
+.published-info{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap:3rem
+}
+/* .published-det{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
+.published-show{
+    width: 55%
+}
+.span-btn{
+    background-color: #26BDD2;
+    color: white;
+    /* width: 8.8rem; */
+   
+    border-radius: 5px;
+   
+}
