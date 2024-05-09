@@ -1,22 +1,22 @@
 import React from 'react';
-import '../css/Modal.css' // Import your CSS file for styling
+import '../css/Modal.css'; // Import your CSS file for styling
 
-const Modal = ({ isOpen, onClose, children }) => {
-  const handleClose = () => {
-    onClose && onClose();
+const Modal = ({ children, onClose }) => {
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   return (
-    <>
-      {isOpen && (
-        <div className="modal-backdrop">
-          <div className="modal-content">
-            <button className="close-button" onClick={handleClose}>X</button>
-            {children}
-          </div>
-        </div>
-      )}
-    </>
+    <div className="modal-backdrop" onClick={handleBackdropClick}>
+      <div className="modal">
+        <button className="close-button" onClick={onClose}>
+          Close
+        </button>
+        {children}
+      </div>
+    </div>
   );
 };
 

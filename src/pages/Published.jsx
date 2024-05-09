@@ -59,7 +59,13 @@ const Published = () => {
 
   return (
     <div>
-      {publishedBlogs.map((blog, index) => (
+      {publishedBlogs.length === 0 ? (
+        <>
+          <h2>No blogs yet...</h2>
+          <button className="button-primary">Create Blog</button>
+        </>
+      ) : 
+      publishedBlogs.map((blog, index) => (
         <div
           className="published-main d-flex  justify-content-between mb-4"
           key={blog._id}
@@ -113,8 +119,7 @@ const Published = () => {
           </div>
         </div>
       ))}
-
-      <div>
+      {/* <div>
         <button onClick={handleOpenModal}>Open Modal</button>
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <h2>This is a modal</h2>
@@ -122,7 +127,7 @@ const Published = () => {
           <button onClick={handleCloseModal}>Close</button>
           <button>Another Button</button>
         </Modal>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -10,18 +10,32 @@
     align-items: center;
   }
   
-  .modal-content {
-    background-color: white;
+  .modal {
+    background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 100000;
   }
   
   .close-button {
     position: absolute;
     top: 10px;
     right: 10px;
-    border: none;
     background: none;
+    border: none;
     cursor: pointer;
   }
   
+  .modal-backdrop {
+    --bs-backdrop-zindex: 105000;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--bs-backdrop-zindex);
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: var(--bs-backdrop-bg);
+}

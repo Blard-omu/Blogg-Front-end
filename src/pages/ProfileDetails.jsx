@@ -7,15 +7,15 @@ import axios from "axios";
 import Dot from '../assets/images/dot.png'
 
 const ProfileDetails = () => {
-    // const { userId } = useParams();
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
 
     const { user } = useAuth();
+    console.log(user);
     useEffect(() => {
     const fetchProfileDetails = async () => {
         try {
-          const response = await axios.get(`/user/${user}`);
+          const response = await axios.get(`/user/${user._id}`);
   
           setProfile(response.data);
           console.log(response.data);
@@ -46,7 +46,7 @@ const ProfileDetails = () => {
                 <p className="profile-img">{username.charAt(0).toUpperCase() }</p>
             </div>
             <div className="profile-info py-4" style={{fontFamily:"Montserrat"}}>
-                <h2 style={{fontWeight: '600'}}>{username}</h2>
+                <h2 style={{fontWeight: '600'}}>{username.toUpperCase() }</h2>
                 <p style={{fontSize:"1rem"}} className="d-md-none d-lg-block">Lorem ipsum dolor sit amet consectetur. Ridiculus in tellus cras vitae donec pellentesque condimentum feugiat. Massa id vestibulum enim nunc netus aliquet id feugiat hac. Vel malesuada odio volutpat magna quis. Feugiat sodales cras diam dictum se</p>
                 <p style={{fontSize:"1.1rem"}} className="d-md-block d-lg-none">Lorem ipsum dolor sit amet consectetur. Ridiculus in tellus cras vitae donec pellentesque condimentum feugiat. </p>
                 <div className="profile-more d-flex justify-content-between">
