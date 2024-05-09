@@ -44,7 +44,8 @@ const ProfileDetails = () => {
             </div>
             <div className="profile-info py-4" style={{fontFamily:"Montserrat"}}>
                 <h2 style={{fontWeight: '600'}}>{username}</h2>
-                <p style={{fontSize:"1rem"}}>Lorem ipsum dolor sit amet consectetur. Ridiculus in tellus cras vitae donec pellentesque condimentum feugiat. Massa id vestibulum enim nunc netus aliquet id feugiat hac. Vel malesuada odio volutpat magna quis. Feugiat sodales cras diam dictum se</p>
+                <p style={{fontSize:"1rem"}} className="d-md-none d-lg-block">Lorem ipsum dolor sit amet consectetur. Ridiculus in tellus cras vitae donec pellentesque condimentum feugiat. Massa id vestibulum enim nunc netus aliquet id feugiat hac. Vel malesuada odio volutpat magna quis. Feugiat sodales cras diam dictum se</p>
+                <p style={{fontSize:"1.1rem"}} className="d-md-block d-lg-none">Lorem ipsum dolor sit amet consectetur. Ridiculus in tellus cras vitae donec pellentesque condimentum feugiat. </p>
                 <div className="profile-more d-flex justify-content-between">
                     <span>15,000 views</span>
                     <span>  <img src={Dot}/></span>

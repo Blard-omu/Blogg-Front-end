@@ -45,3 +45,27 @@
     padding: 7px, 20px, 7px, 20px;
     
 }
+@media (min-width:769px) and (max-width: 1080px) {
+    .profile-main{
+        width: 45rem;
+    }
+    .profile-det{
+        width: 85%;
+        border: 1px solid #26BDD2;
+    }
+    .profile-pics{
+        width: 20%;
+        border: 1px solid #26BDD2;
+    }
+    /* .profile-img{
+        width: 198px;
+        height: 220px;
+    }  */
+    .profile-info{
+        width: 60%;
+    }
+    .edit{
+        width: 15%;
+        
+    }
+}

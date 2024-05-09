@@ -13,11 +13,12 @@ const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedBlog, setSelectedBlog] = useState(null);
+  // const [selectedBlog, setSelectedBlog] = useState(null);
+  const [sliceLimit, setSliceLimit] = useState(550);
 
-  const handleShowModal = (blog) => {
+  const handleShowModal = () => {
     setShowModal(true);
-    setSelectedBlog(blog);
+    // setSelectedBlog(blog);
   };
 
   const handleCloseModal = () => {
@@ -47,32 +48,43 @@ const Published = () => {
     fetchPublishedBlogs();
   }, [user]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      // Adjust slice limit based on screen width
+      if (window.innerWidth < 1080) {
+        setSliceLimit(250); // Set slice limit for small screens
+      } 
+      else {
+        setSliceLimit(550); // Set default slice limit for larger screens
+      }
+    };
+
+    // Call handleResize when the window size changes
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize on initial load
+    handleResize();
+
+    // Cleanup listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
   console.log("showModal:", showModal);
-console.log("selectedBlog:", selectedBlog);
+// console.log("selectedBlog:", selectedBlog);
   return (
     <div >
-      {/* <h2>Published Blogs</h2>
       {publishedBlogs.map((blog) => (
-        
-        <div key={blog._id}>
-          <h3>{blog.title}</h3>
-          <p>{blog.content}</p>
-          <b>{blog.author}</b>
-          <br />
-          <em>{blog.state}</em>
-        </div>
-      ))} */}
-      {publishedBlogs.map((blog) => (
-      <div className="published-main d-flex justify-content-between mb-4" key={blog._id}>
+      <div className="published-main d-flex  justify-content-between mb-4" key={blog._id}>
         <div className="published-img">
           <img src={blog.imageUrl} alt="blog image" style={{ height:"100%", width: "100%", borderRadius:"10px"}}/>
         </div>
         <div className="published-info" style={{fontFamily:"Montserrat"}}>
           <div className="publised-dot d-flex align-items-center justify-content-end">
-            <img src={Dots} onClick={() => handleShowModal(blog)}/>
+            <img src={Dots} onClick={() => handleShowModal()}/>
           </div>
           <div clasName="published-det d-flex justify-content-between">
             <div className="published-show d-flex justify-content-between">
@@ -82,20 +94,17 @@ console.log("selectedBlog:", selectedBlog);
               <span>9/09/2023</span>
             </div>
             <h2 style={{fontWeight: '600'}}>{blog.title}</h2>
-            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0,550)}</p>
+            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0, sliceLimit)}</p>
           </div>
         </div>
       </div>
        ))}
        <>
-       <Modal show={showModal} onHide={handleCloseModal}>
+       <Modal show={showModal} onHide={handleCloseModal} centered className="">
         <Modal.Header closeButton>
-          <Modal.Title>{selectedBlog ? selectedBlog.title : ''}</Modal.Title>
+          <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedBlog && (
-            <>
-              <p>{selectedBlog.content}</p>
               <Button variant="primary" onClick={handleCloseModal}>
                 Publish
               </Button>
@@ -105,8 +114,7 @@ console.log("selectedBlog:", selectedBlog);
               <Button variant="danger" onClick={handleCloseModal}>
                 Delete
               </Button>
-            </>
-          )}
+       
         </Modal.Body>
       </Modal>
        </>
