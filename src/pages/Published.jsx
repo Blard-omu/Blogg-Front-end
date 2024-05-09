@@ -1,33 +1,26 @@
-// Published.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import Publish from '../assets/images/Frame 66 (1).png'
-import "../css/Published.css"
-import View from '../assets/images/ep_view.png'
-import Dots from '../assets/images/quill_meatballs-v.png'
-import Dot from '../assets/images/dot.png'
-// import { Modal, Button } from 'react-bootstrap'; 
+import Modal from "../components/Modal";
+import "../css/Published.css";
+import View from "../assets/images/ep_view.png";
+import Dots from "../assets/images/quill_meatballs-v.png";
+import Dot from "../assets/images/dot.png";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdEditSquare } from "react-icons/md";
+import { FaTelegramPlane } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  // const [selectedBlog, setSelectedBlog] = useState(null);
-  const [sliceLimit, setSliceLimit] = useState(550);
-
-  const handleShowModal = () => {
-    setShowModal(true);
-    // setSelectedBlog(blog);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [optionsOpenIndex, setOptionsOpenIndex] = useState(null); // Track the index of the blog with open options
 
   const { user } = useAuth();
   console.log(user);
   console.log(publishedBlogs);
+
   useEffect(() => {
     const fetchPublishedBlogs = async () => {
       try {
@@ -48,76 +41,88 @@ const Published = () => {
     fetchPublishedBlogs();
   }, [user]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      // Adjust slice limit based on screen width
-      if (window.innerWidth < 1080) {
-        setSliceLimit(250); // Set slice limit for small screens
-      } 
-      else {
-        setSliceLimit(550); // Set default slice limit for larger screens
-      }
-    };
+  const toggleOptions = (index) => {
+    setOptionsOpenIndex(index === optionsOpenIndex ? null : index);
+  };
 
-    // Call handleResize when the window size changes
-    window.addEventListener("resize", handleResize);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
 
-    // Call handleResize on initial load
-    handleResize();
-
-    // Cleanup listener
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log("showModal:", showModal);
-// console.log("selectedBlog:", selectedBlog);
+
   return (
-    <div >
-      {publishedBlogs.map((blog) => (
-      <div className="published-main d-flex  justify-content-between mb-4" key={blog._id}>
-        <div className="published-img">
-          <img src={blog.imageUrl} alt="blog image" style={{ height:"100%", width: "100%", borderRadius:"10px"}}/>
-        </div>
-        <div className="published-info" style={{fontFamily:"Montserrat"}}>
-          <div className="publised-dot d-flex align-items-center justify-content-end">
-            <img src={Dots} onClick={() => handleShowModal()}/>
+    <div>
+      {publishedBlogs.map((blog, index) => (
+        <div
+          className="published-main d-flex  justify-content-between mb-4"
+          key={blog._id}
+        >
+          <div className="published-img">
+            <img
+              src={blog.imageUrl}
+              alt="blog image"
+              style={{ height: "100%", width: "100%", borderRadius: "10px" }}
+            />
           </div>
-          <div clasName="published-det d-flex justify-content-between">
-            <div className="published-show d-flex justify-content-between">
-              <span className="span-btn p-1">{blog.category}</span>
-              <span><img src={View}/> Views</span>
-              <span><img src={Dot}/> 4 mins read</span>
-              <span>9/09/2023</span>
+          <div className="published-info" style={{ fontFamily: "Montserrat" }}>
+            <div
+              className="publised-dot d-flex align-items-center justify-content-end"
+              onClick={() => toggleOptions(index)} // Pass index to toggleOptions
+            >
+              <BsThreeDotsVertical />
             </div>
-            <h2 style={{fontWeight: '600'}}>{blog.title}</h2>
-            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0, sliceLimit)}</p>
+            {optionsOpenIndex === index && ( // Show options only for the clicked blog
+              <div className="options-publish">
+                <button className="pub">
+                  <FaTelegramPlane />
+                  Publish
+                </button>
+                <button className="ed">
+                  <MdEditSquare />
+                  Edit
+                </button>
+                <button className="del">
+                  <MdDelete />
+                  Delete
+                </button>
+              </div>
+            )}
+            <div clasName="published-det d-flex justify-content-between">
+              <div className="published-show d-flex justify-content-between">
+                <span className="span-btn p-1">{blog.category}</span>
+                <span>
+                  <img src={View} /> Views
+                </span>
+                <span>
+                  <img src={Dot} /> 4 mins read
+                </span>
+                <span>9/09/2023</span>
+              </div>
+              <h2 style={{ fontWeight: "600" }}>{blog.title}</h2>
+              <p style={{ fontSize: "1.07rem" }}>
+                {blog.content.slice(0, 550)}
+              </p>
+            </div>
           </div>
         </div>
+      ))}
+
+      <div>
+        <button onClick={handleOpenModal}>Open Modal</button>
+        <Modal isOpen={isOpen} onClose={handleCloseModal}>
+          <h2>This is a modal</h2>
+          <p>Modal content goes here.</p>
+          <button onClick={handleCloseModal}>Close</button>
+          <button>Another Button</button>
+        </Modal>
       </div>
-       ))}
-       {/* <>
-       <Modal show={showModal} onHide={handleCloseModal} centered className="">
-        <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-              <Button variant="primary" onClick={handleCloseModal}>
-                Publish
-              </Button>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Edit
-              </Button>
-              <Button variant="danger" onClick={handleCloseModal}>
-                Delete
-              </Button>
-       
-        </Modal.Body>
-      </Modal>
-       </> */}
     </div>
   );
 };

@@ -11,22 +11,53 @@
     flex-direction: column;
     gap:3rem
 }
-/* .published-det{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-} */
 .published-show{
-    width: 55%
+    width: 55%;
+    cursor: pointer;
 }
 .span-btn{
     background-color: #26BDD2;
     color: white;
-    /* width: 8.8rem; */
-   
+    /* width: 8.8rem; */ 
     border-radius: 5px;
 }
-@media (min-width:769px) and (max-width: 1080px) {
+.publised-dot{
+    cursor: pointer;
+    font-size: 20px;
+    position: relative;
+}
+.options-publish{
+    position: absolute;
+    right: 6rem;
+    display: flex;
+    flex-direction: column;
+    width: 130px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 10px black;
+    gap: 3px;
+    padding: 5px;
+    
+}
+.options-publish button{
+    /* width: 106px; */
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 3px;
+    background-color: white;
+}
+.options-publish .del:hover{
+    color: red;
+}
+.options-publish .pub:hover{
+    color:#26BDD2
+}
+.options-publish .ed:hover{
+    font-weight: 700;
+}
+
+@media (min-width: 769px) and (max-width: 1080px) {
     .published-main{
         width: 45rem;
         border: 1px solid blue;

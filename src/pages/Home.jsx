@@ -14,6 +14,7 @@ const Home = () => {
   const line = {
     width: "100%",
     border: "1px solid #26bdd2",
+    margin: "6rem 0",
   };
   return (
     <>

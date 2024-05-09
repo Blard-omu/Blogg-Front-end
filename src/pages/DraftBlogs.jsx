@@ -27,7 +27,7 @@ const DraftBlogs = () => {
         setDraftBlogs(response.data.blogs);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching published blogs:", error);
+        console.error("Error fetching published blogs: ", error);
       }
     };
 
