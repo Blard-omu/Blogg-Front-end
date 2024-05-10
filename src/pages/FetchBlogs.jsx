@@ -9,7 +9,7 @@ import Pagination from "../components/Pagination";
 
 const FetchBlogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -20,10 +20,13 @@ const FetchBlogs = () => {
           return blog.state === "published";
         });
         setBlogs(allBlogs);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        setLoading(false);
       } finally {
         setLoading(false);
+
       }
     };
 
