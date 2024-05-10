@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import "../css/createblog.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-const CreateBlog = () => {
+const UpdateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
@@ -12,6 +14,13 @@ const CreateBlog = () => {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [existingImage, setExistingImage] = useState(null);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const { _id } = useParams();
 
   const navigate = useNavigate();
 
@@ -21,9 +30,28 @@ const CreateBlog = () => {
       ? JSON.parse(storedUsername).user.username
       : "";
     setAuthor(parsedUsername);
-  }, []);
 
-  const handleSubmit = async (e, state) => {
+   // Fetch existing blog details
+   axios.get(`/blog/${_id}`)
+   .then(response => {
+     const { title, content, category, tags, imageUrl} = response.data;
+     setTitle(title);
+     setContent(content);
+     setCategory(category);
+     setTags(tags);
+     setExistingImage(imageUrl);
+   })
+   .catch(error => {
+     console.error("Error fetching blog details:", error);
+     toast.error("Failed to fetch blog details");
+   });
+ }, [_id]);
+
+ const handleImageChange = (e) => {
+  setImage(e.target.files[0]);
+};
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -33,45 +61,44 @@ const CreateBlog = () => {
     formData.append("tags", tags);
     formData.append("author", author);
     formData.append("imageUrl", image);
-    formData.append("state", state); // Add state parameter to FormData
 
     try {
-      setLoading(true);
-      const { data } = await axios.post("/create", formData, {
+      setLoading(true)
+
+      const { data } = await axios.patch(`/blog/${_id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
       if (data?.success) {
-        toast.success("Blog created successfully");
-        setTimeout(() => {
-          navigate("/profile");
-        }, 3000);
+        toast.success("Blog updated successfully");
+        navigate("/profile");
+        setLoading(false);
       } else {
-        toast.error("Failed to create blog");
+        toast.error("Failed to update blog");
       }
-    } catch (err) {
-      if (err?.response?.data) {
-        const error = err.response.data.error;
-        toast.error(error);
-      } else {
-        toast.error("Failed to create blog");
-      }
-    } finally {
+    }catch (err) {
+      console.error("Error updating blog:", err);
+    if (err?.response?.data) {
+      const error = err.response.data.error;
+      toast.error(error); // Display the specific error message returned from the server
+    } else {
+      toast.error("Failed to update blog");
+    }
       setLoading(false);
     }
   };
 
   return (
     <div style={{ paddingTop: "120px" }}>
-      <h1>Create A New Blog</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="">Update Blog</h1>
+      <form className="" onSubmit={handleSubmit}>
         <div className="create-input">
           <label>Title</label>
           <input
+            className="form-control p-3"
             type="text"
-            className="form-control py-3"
             placeholder="Enter title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -81,8 +108,8 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Category</label>
           <input
+            className="form-control p-3"
             type="text"
-            className="form-control py-3"
             placeholder="Enter category here"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -90,10 +117,10 @@ const CreateBlog = () => {
           />
         </div>
         <div className="create-input">
-          <label>Tags</label>
+        <label>Tags</label>
           <input
+            className="form-control p-3"
             type="text"
-            className="form-control py-3"
             placeholder="Enter tags here"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
@@ -103,9 +130,9 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Author</label>
           <input
+            className="form-control p-3"
             type="text"
             placeholder="Author"
-            className="form-control"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             required
@@ -115,35 +142,50 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Upload blog image</label>
           <input
+            className="form-control file"
             type="file"
+            aria-label="File browser example"
             accept="image/*"
-            className="form-control py-3"
             onChange={(e) => setImage(e.target.files[0])}
             required
+            placeholder=""
           />
+          {existingImage && ( // Render existing image if available
+            <img src={existingImage} alt="Existing blog image" style={{ maxWidth: "200px", marginTop: "10px" }} />
+          )}
         </div>
         <div className="create-input">
           <label>Story</label>
           <textarea
+            className="form-control"
             placeholder="Write your story here"
             value={content}
-            className="form-control py-3"
             onChange={(e) => setContent(e.target.value)}
             required
           />
         </div>
-        <div className="create-input ">
-          <label style={{ color: "#a38686" }}>
-            Note: Newly created blogs will be saved directly to your drafts.
-            Navigate to your drafts to publish them.
-          </label>
-          <button type="submit" className="create-btn">
-            {loading ? "loading..." : "Create blog"}
+        <button className="btn btn-primary" type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Update"}
           </button>
-        </div>
       </form>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
+    
   );
 };
 
-export default CreateBlog;
+export default UpdateBlog;

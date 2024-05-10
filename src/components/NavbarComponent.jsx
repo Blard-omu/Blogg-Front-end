@@ -11,21 +11,10 @@ import "../css/Navbar.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Modal from "./Modal";
-
 const NavbarComponent = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
 
   const logout = () => {
     setAuth({ ...auth, auth: null, token: "" });
@@ -102,15 +91,6 @@ const NavbarComponent = () => {
           </Navbar.Collapse>
         </Navbar>
         <div className="" style={line}></div>
-        {/* <button onClick={handleOpenModal}>Open Modal</button> */}
-        {modalOpen && (
-          <Modal onClose={handleCloseModal}>
-            <div>
-              <h2>Modal Content</h2>
-              <p>This is some modal content.</p>
-            </div>
-          </Modal>
-        )}
       </div>
     </>
   );

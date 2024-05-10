@@ -8,18 +8,21 @@ import { Link } from "react-router-dom";
 
 const TrendingCard = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("/blogs/all?page=1&limit=1000000");
+        setLoading(true);
+        const response = await axios.get("/blogs/all?page=1&limit=10000");
         const trendingBlogs = response.data.blogs.filter((blog) => {
           return blog.tags.includes("popular trending") && blog.state === "published";
+          setLoading(false);
         });
         setBlogs(trendingBlogs.slice(0, 1));
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        setLoading(false);
       } finally {
         setLoading(false);
       }

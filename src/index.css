@@ -46,4 +46,5 @@ button:focus, .button-primary, .button-primary:hover {
 .loading img{
   width: 100%;
   opacity: .6;
+  color: #a38686;
 }

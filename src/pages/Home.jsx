@@ -16,6 +16,7 @@ const Home = () => {
     border: "1px solid #26bdd2",
     margin: "6rem 0",
   };
+
   return (
     <>
       <div style={{ paddingTop: "90px" }}></div>
