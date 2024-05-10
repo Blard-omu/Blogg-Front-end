@@ -97,18 +97,8 @@ const CreateBlog = () => {
             required
           />
         </div>
-        {/* <div className="create-input">
-          <label>Tags</label>
-          <input
-            className="form-control p-3"
-            type="text"
-            placeholder="Author"
-            value={author}
-            // onChange={(e) => setCategory(e.target.value)}
-            disabled
-          />
-        </div> */}
-        <div className="form-control">
+        <div className="create-input">
+        <label>Tags</label>
           <input
             className="form-control p-3"
             type="text"
@@ -152,7 +142,7 @@ const CreateBlog = () => {
             required
           />
         </div>
-        <button className="btn btn-primary" type="submit" disabled={loading}>
+        <button className="create-btn" type="submit" disabled={loading}>
           {loading ? "Loading..." : "Create"}
           </button>
       </form>
