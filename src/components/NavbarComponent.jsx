@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -43,27 +44,33 @@ const NavbarComponent = () => {
     top: "0px",
     zIndex: 9999,
   };
+  const active = {
+    textDecoration: 'none',
+    color: 'black',
+    padding: '2px 6px',
+    fontWeight: 600
+  }
 
   return (
     <>
       <div className="" style={header}>
         <Navbar
           expand="lg"
-          style={{ minHeight: "100px", width: "100%", padding: "0px 10px" }}
+          style={{ minHeight: "100px", width: "100%", padding: "0px 15px" }}
         >
           <Navbar className="logo" href="#">
             BLOGG
           </Navbar>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav className="nav-ul-items mx-auto my-2 my-lg-0" navbarScroll>
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="#action3">About</Nav.Link>
-              <Nav.Link href="/blogs">Blog</Nav.Link>
-              <Nav.Link href="/blogs/search">Search blogs</Nav.Link>
+            <Nav className="nav-ul-items mx-auto my-2 my-lg-0 gap-4 " style={active} navbarScroll>
+              <NavLink style={active} exact to="/" activeClassName="active">Home</NavLink>
+              <NavLink style={active} to="/about" activeClassName="active">About</NavLink>
+              <NavLink style={active} to="/blogs" activeClassName="active">Blog</NavLink>
+              <NavLink style={active} to="/blog/search" activeClassName="active">Search blogs</NavLink>
 
-              {/* <Nav.Link href="#action4">Contact</Nav.Link> */}
-              {auth?.token && <Nav.Link href="/create">Create Blog</Nav.Link>}
+              {/* <NavLink to="/contact" activeClassName="active">Contact</NavLink> */}
+              {auth?.token && <NavLink style={active} to="/create" activeClassName="active">Create Blog</NavLink>}
             </Nav>
 
             {auth?.token ? (
@@ -95,7 +102,7 @@ const NavbarComponent = () => {
           </Navbar.Collapse>
         </Navbar>
         <div className="" style={line}></div>
-        <button onClick={handleOpenModal}>Open Modal</button>
+        {/* <button onClick={handleOpenModal}>Open Modal</button> */}
         {modalOpen && (
           <Modal onClose={handleCloseModal}>
             <div>

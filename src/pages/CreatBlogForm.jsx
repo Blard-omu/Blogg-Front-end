@@ -60,8 +60,9 @@ const CreateBlog = () => {
     }catch (err) {
       if (err?.response?.data) {
         const error  = err.response.data.error;
-        toast.error(error);
+        toast.error("Fail to create blog");
         setLoading(false);
+        console.log(err);
       } else {
         toast.error("Fail to create blog");
       }

@@ -18,3 +18,26 @@
     background-color: var(--primary);
     opacity: 0.8;
 }
+
+.navbar-nav .nav-link {
+    position: relative;
+  }
+  
+  .navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px; /* Adjust this value to change the distance of the underline from the text */
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #26bdd2; /* Change this color to match your design */
+    transition: width 0.3s ease; /* Adjust the transition speed as needed */
+  }
+  .active{
+    color: white !important;
+  }
+  .navbar-nav .nav-link:hover::after,
+  .navbar-nav .nav-link.active::after {
+    width: 100%;
+  }
+  

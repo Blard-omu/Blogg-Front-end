@@ -13,6 +13,8 @@ import FetchBlogs from "./pages/FetchBlogs";
 import BlogDetail from "./pages/BlogDetail";
 import SearchBlog from "./pages/SearchBlog";
 import Footer from "./components/Footer";
+import About from "./pages/About";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/blogs" element={<FetchBlogs />} />
           <Route path="/blog/:_id" element={<BlogDetail />} />
-          <Route path="/blogs/search" element={<SearchBlog />} />
-
+          <Route path="/blog/search" element={<SearchBlog />} />
+          <Route path="/*" element={<NotFoundPage/>} />
+          <Route path="/about" element={<About />} />
+          
           {/* Protected Routes */}
           <Route path="/" element={<PrivateRoutes />}>
             <Route path="profile" element={<Profile />} />

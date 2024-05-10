@@ -17,7 +17,7 @@ const FetchBlogs = () => {
       try {
         const response = await axios.get("/blogs/all?page=1&limit=1000000");
         const allBlogs = response.data.blogs.filter((blog) => {
-          return blog.state === "published";
+          return blog.state === "draft";
         });
         setBlogs(allBlogs);
       } catch (error) {
