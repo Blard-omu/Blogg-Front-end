@@ -42,6 +42,7 @@ const Published = () => {
     fetchPublishedBlogs();
   }, [user]);
 
+  console.log(setPublishedBlogs);
   const toggleOptions = (index) => {
     setOptionsOpenIndex(index === optionsOpenIndex ? null : index);
   };
@@ -54,10 +55,10 @@ const Published = () => {
     setIsOpen(false);
   };
 
-  const createdAt = "2021-03-20T19:40:59.495Z";
-const date = new Date(createdAt);
-const formattedDate = date.toISOString().split('T')[0];
-console.log(formattedDate);
+//   const createdAt = "2021-03-20T19:40:59.495Z";
+// const date = new Date(createdAt);
+// const formattedDate = date.toISOString().split('T')[0];
+// console.log(formattedDate);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -118,7 +119,7 @@ console.log(formattedDate);
                 <span>
                   <img src={Dot} /> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}
                 </span>
-                <span>{formattedDate}</span>
+                <span>{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
               </div>
               <h2 style={{ fontWeight: "600" }}>{blog.title}</h2>
               <p style={{ fontSize: "1.07rem" }}>
