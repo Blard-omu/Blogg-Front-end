@@ -3,9 +3,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "../css/createblog.css";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import OffCanvas from "../components/Modal";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -15,10 +12,6 @@ const CreateBlog = () => {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
 
@@ -30,7 +23,7 @@ const CreateBlog = () => {
     setAuthor(parsedUsername);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, state) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -40,10 +33,10 @@ const CreateBlog = () => {
     formData.append("tags", tags);
     formData.append("author", author);
     formData.append("imageUrl", image);
+    formData.append("state", state); // Add state parameter to FormData
 
     try {
-      setLoading(true)
-
+      setLoading(true);
       const { data } = await axios.post("/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -52,20 +45,18 @@ const CreateBlog = () => {
 
       if (data?.success) {
         toast.success("Blog created successfully");
-        navigate("/profile");
-        navigate("/");
-        setLoading(false);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 3000);
       } else {
         toast.error("Failed to create blog");
       }
-    }catch (err) {
+    } catch (err) {
       if (err?.response?.data) {
-        const error  = err.response.data.error;
-        toast.error("Fail to create blog");
-        setLoading(false);
-        console.log(err);
+        const error = err.response.data.error;
+        toast.error(error);
       } else {
-        toast.error("Fail to create blog");
+        toast.error("Failed to create blog");
       }
     } finally {
       setLoading(false);
@@ -74,13 +65,13 @@ const CreateBlog = () => {
 
   return (
     <div style={{ paddingTop: "120px" }}>
-      <h1 className="">Create A New Blog</h1>
-      <form className="" onSubmit={handleSubmit}>
+      <h1>Create A New Blog</h1>
+      <form onSubmit={handleSubmit}>
         <div className="create-input">
           <label>Title</label>
           <input
-            className="form-control p-3"
             type="text"
+            className="form-control py-3"
             placeholder="Enter title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -90,8 +81,8 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Category</label>
           <input
-            className="form-control p-3"
             type="text"
+            className="form-control py-3"
             placeholder="Enter category here"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -99,10 +90,10 @@ const CreateBlog = () => {
           />
         </div>
         <div className="create-input">
-        <label>Tags</label>
+          <label>Tags</label>
           <input
-            className="form-control p-3"
             type="text"
+            className="form-control py-3"
             placeholder="Enter tags here"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
@@ -112,9 +103,9 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Author</label>
           <input
-            className="form-control p-3"
             type="text"
             placeholder="Author"
+            className="form-control"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             required
@@ -124,31 +115,34 @@ const CreateBlog = () => {
         <div className="create-input">
           <label>Upload blog image</label>
           <input
-            className="form-control file"
             type="file"
-            aria-label="File browser example"
             accept="image/*"
+            className="form-control py-3"
             onChange={(e) => setImage(e.target.files[0])}
             required
-            placeholder=""
           />
         </div>
         <div className="create-input">
           <label>Story</label>
           <textarea
-            className="form-control"
             placeholder="Write your story here"
             value={content}
+            className="form-control py-3"
             onChange={(e) => setContent(e.target.value)}
             required
           />
         </div>
-        <button className="create-btn" type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Create"}
+        <div className="create-input ">
+          <label style={{ color: "#a38686" }}>
+            Note: Newly created blogs will be saved directly to your drafts.
+            Navigate to your drafts to publish them.
+          </label>
+          <button type="submit" className="create-btn">
+            {loading ? "loading..." : "Create blog"}
           </button>
+        </div>
       </form>
     </div>
-    
   );
 };
 

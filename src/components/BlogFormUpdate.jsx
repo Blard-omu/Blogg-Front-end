@@ -74,7 +74,6 @@ const UpdateBlog = () => {
       if (data?.success) {
         toast.success("Blog updated successfully");
         navigate("/profile");
-        navigate("/");
         setLoading(false);
       } else {
         toast.error("Failed to update blog");
@@ -87,7 +86,6 @@ const UpdateBlog = () => {
     } else {
       toast.error("Failed to update blog");
     }
-    
       setLoading(false);
     }
   };
@@ -118,18 +116,8 @@ const UpdateBlog = () => {
             required
           />
         </div>
-        {/* <div className="create-input">
-          <label>Tags</label>
-          <input
-            className="form-control p-3"
-            type="text"
-            placeholder="Author"
-            value={author}
-            // onChange={(e) => setCategory(e.target.value)}
-            disabled
-          />
-        </div> */}
-        <div className="form-control">
+        <div className="create-input">
+        <label>Tags</label>
           <input
             className="form-control p-3"
             type="text"
