@@ -2,10 +2,10 @@ import React from "react";
 import Hero from "./Hero";
 import Container from "react-bootstrap/Container";
 import Trending from "./Trending";
-import SliderComponent from "../components/SliderComponent";
 import { useAuth } from "../contexts/AuthContext";
 import CustomLoader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
+import Popular from "../components/Popular";
 
 const Home = () => {
   const { loading, auth, setAuth } = useAuth();
@@ -24,17 +24,8 @@ const Home = () => {
       </Container>
       <div className="line" style={line}></div>
       <Container className="">
-        {loading ? (
-          <CustomLoader />
-        ) : (
-          // <p>loading</p>
-          <>
-            <Trending />
-            <SliderComponent />
-            <SliderComponent tag="Health" bg="#26d22d" />
-            <SliderComponent tag="Entertainment" bg="#d2a126" />
-          </>
-        )}
+        <Trending />
+        <Popular tag="Sport" bg="#26d22d" />
       </Container>
     </>
   );

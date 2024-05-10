@@ -13,8 +13,9 @@ const AuthProvider = ({ children }) => {
 
   // axios config
   axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_API_URL;
-  axios.defaults.headers.common["Authorization"] = auth?.token;
-
+  useEffect(() => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
+  }, [auth?.token]);
   const [published, setPublished] = useState([]);
   const [loading, setLoading] = useState(true);
 
