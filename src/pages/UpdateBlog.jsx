@@ -70,16 +70,20 @@ const BlogUpdate = () => {
   };
 
   return (
-    <div>
+    <div className="" style={{paddingTop: "20rem"}}>
       <h1>Update Blog</h1>
       <form>
-        <label>Title:</label>
-        <input
-          type="text"
-          name="title"
-          value={blogData.title}
-          onChange={handleInputChange}
-        />
+      <div className="create-input">
+          <label>Title</label>
+          <input
+            className="form-control p-3"
+            type="text"
+            placeholder="Enter title here"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
 
         <label>Content:</label>
         <textarea

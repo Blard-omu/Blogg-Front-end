@@ -8,7 +8,7 @@ import Register from "./pages/SignUp";
 import CreateBlog from "./pages/CreatBlogForm";
 import Profile from "./pages/Profile";
 import PrivateRoutes from "./pages/PrivateRoutes";
-import BlogUpdate from "./pages/UpdateBlog";
+import UpdateBlog from "./components/BlogFormUpdate";
 import FetchBlogs from "./pages/FetchBlogs";
 import BlogDetail from "./pages/BlogDetail";
 import SearchBlog from "./pages/SearchBlog";
@@ -32,7 +32,7 @@ function App() {
           <Route path="/" element={<PrivateRoutes />}>
             <Route path="profile" element={<Profile />} />
             <Route path="create" element={<CreateBlog />} />
-            <Route path="blog/update" element={<BlogUpdate />} />
+            <Route path="blog/update/:_id" element={<UpdateBlog />} />
           </Route>
       </Routes>
         </div>

@@ -8,8 +8,9 @@ import Dots from "../assets/images/quill_meatballs-v.png";
 import Dot from "../assets/images/dot.png";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEditSquare } from "react-icons/md";
-import { FaTelegramPlane } from "react-icons/fa";
+// import { FaTelegramPlane } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
@@ -53,6 +54,11 @@ const Published = () => {
     setIsOpen(false);
   };
 
+  const createdAt = "2021-03-20T19:40:59.495Z";
+const date = new Date(createdAt);
+const formattedDate = date.toISOString().split('T')[0];
+console.log(formattedDate);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -86,14 +92,17 @@ const Published = () => {
             </div>
             {optionsOpenIndex === index && ( // Show options only for the clicked blog
               <div className="options-publish">
-                <button className="pub">
+                {/* <button className="pub">
                   <FaTelegramPlane />
                   Publish
-                </button>
-                <button className="ed">
+                </button> */}
+                <Link to={`/blog/update/${blog._id}`}>
+                <button className="ed" >
                   <MdEditSquare />
                   Edit
                 </button>
+                </Link>
+                
                 <button className="del">
                   <MdDelete />
                   Delete
@@ -107,9 +116,9 @@ const Published = () => {
                   <img src={View} /> Views
                 </span>
                 <span>
-                  <img src={Dot} /> 4 mins read
+                  <img src={Dot} /> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}
                 </span>
-                <span>9/09/2023</span>
+                <span>{formattedDate}</span>
               </div>
               <h2 style={{ fontWeight: "600" }}>{blog.title}</h2>
               <p style={{ fontSize: "1.07rem" }}>
