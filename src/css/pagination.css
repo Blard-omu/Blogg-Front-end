@@ -13,11 +13,12 @@
     cursor: pointer;
     outline: none;
     font-weight: 600;
-    color: lightgray;
+    color: rgb(166, 161, 161);
   }
   
   .pagination-btn button:disabled {
-    color: lightgray;
+    color: rgb(237, 233, 233);
+    cursor:not-allowed;
 }
   
   .pagination-btn button.active-m {
