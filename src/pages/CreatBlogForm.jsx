@@ -157,6 +157,7 @@ const CreateBlog = () => {
           </button>
         </div>
       </form>
+      <ModalCom/>
       {/* <FormModal
         show={modalShow}
         onHide={() => setModalShow(false)}

@@ -16,38 +16,38 @@ const Recommended = ({ sameCategory }) => {
 
   return (
     <>
-      <div className="">
-        {sameCategory.map((b, i) => (
-          <Link className="link" to={`/blog/${b._id}`} key={b._id}>
-            <div className="blog-card-recom">
-              <img src={b.imageUrl} alt={b.title} />
-              <div className="content-recom">
-                <div className="content-info">
-                  <span>
-                    <MdOutlineRemoveRedEye />
-                    views
-                  </span>
-                  <span>
-                    <LuDot style={{ color: "green" }} />
-                    {b.read_time} mins read
-                  </span>
-                  <span>
-                    {new Date(b.createdAt)
-                      .toISOString()
-                      .split("T")[0]
-                      .replace(/-/g, "/")}
-                  </span>
-                </div>
+      {sameCategory.map((b, i) => (
+        <Link className="link" to={`/blog/${b._id}`} key={b._id}>
+          <div className="blog-card-recom">
+            <img src={b.imageUrl} alt={b.title} />
+            <div className="content-recom">
+              <div className="content-info">
+                <span>
+                  <MdOutlineRemoveRedEye />
+                  views
+                </span>
+                <span>
+                  <LuDot style={{ color: "green" }} />
+                  {b.read_time} mins read
+                </span>
+                <span>
+                  {new Date(b.createdAt)
+                    .toISOString()
+                    .split("T")[0]
+                    .replace(/-/g, "/")}
+                </span>
               </div>
-              <h3>{b.title}</h3>
-              <p>
-                {truncateText(b.content, 200)}{" "}
-                <Link className="link" to={`/blog/${b._id}`}>Read more</Link>{" "}
-              </p>
             </div>
-          </Link>
-        ))}
-      </div>
+            <h3>{truncateText(b.title, 60)}</h3>
+            <p>
+              {truncateText(b.content, 170)}{" "}
+              <Link className="link" to={`/blog/${b._id}`}>
+                <b>Read more</b>
+              </Link>{" "}
+            </p>
+          </div>
+        </Link>
+      ))}
     </>
   );
 };

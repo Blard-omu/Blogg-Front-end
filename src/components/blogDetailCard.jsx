@@ -15,6 +15,12 @@ const BlogDetailCard = ({
   category,
   createdAt
 }) => {
+
+  // let catColor = '#26bdd2'
+  // if (category ==='sport') {
+  // catColor = 'red'
+  // }
+
   return (
     <>
       <div className="detail row">

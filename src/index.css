@@ -14,7 +14,7 @@
   --grey-sub-text-colour: #626060;
 }
 
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
