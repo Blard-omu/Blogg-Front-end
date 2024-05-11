@@ -11,11 +11,6 @@ const Profile = () => {
     setActiveSection(section);
   };
   return (
-    // <div style={{paddingTop: "20rem"}}>
-    //   <ProfileDetails/>
-    //   <Published/>
-    //   <DraftBlogs/>
-    // </div>
     <div style={{ paddingTop: '8rem' }}>
      <div className="mb-4">
      <ProfileDetails />
