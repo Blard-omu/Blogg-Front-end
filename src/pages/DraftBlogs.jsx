@@ -3,28 +3,46 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import Dots from '../assets/images/quill_meatballs-v.png'
 import Dot from '../assets/images/dot.png'
 import View from '../assets/images/ep_view.png'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEditSquare } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Link } from "react-router-dom";
+import Paginations from "../components/Paginations";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const DraftBlogs = () => {
   const [draftBlogs, setDraftBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [optionsOpenIndex, setOptionsOpenIndex] = useState(null); // Track the index of the blog with open options
-  const [showModal, setShowModal] = useState(false);
-  const [blogToDelete, setBlogToDelete] = useState(null);
+  const [sliceLimit, setSliceLimit] = useState(450); // Initial slice limit
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { user } = useAuth();
-  // console.log(user);
-  // console.log(publishedBlogs);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      // Adjust slice limit based on screen width
+      if (window.innerWidth < 768) {
+        setSliceLimit(0); // Set slice limit for small screens
+      } else if (window.innerWidth < 1024){
+        setSliceLimit(150); // Set default slice limit for larger screens
+      }else {
+        // Desktop
+        setSliceLimit(450);
+      }
+    };
+    // Call handleResize when the window size changes
+    window.addEventListener("resize", handleResize);
+    // Call handleResize on initial load
+    handleResize();
+    // Cleanup listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchPublishedBlogs = async () => {
       try {
@@ -34,9 +52,9 @@ const DraftBlogs = () => {
             author: user.username,
           },
         });
-
         setDraftBlogs(response.data.blogs);
         setLoading(false);
+        setCurrentPage(1)
       } catch (error) {
         console.error("Error fetching published blogs: ", error);
       }
@@ -49,37 +67,18 @@ const DraftBlogs = () => {
     setOptionsOpenIndex(index === optionsOpenIndex ? null : index);
   };
 
-  const handleDeleteClick = (blogId) => {
-    setBlogToDelete(blogId);
-    setShowModal(true);
-  };
-
-  const handleDelete = async () => {
+  const handleDelete = async (blogId) => {
     try {
-      await axios.delete(`/blog/${blogToDelete}`);
+      await axios.delete(`/blog/${blogId}`);
       // Remove the deleted blog from the publishedBlogs array
-      // setPublishedBlogs(publishedBlogs.filter((blog) => blog._id !== blogToDelete));
-      toast.success('Blog delete successful');
-      setTimeout(() => {
-        navigate("/profile");
-      }, 3000);
+      setDraftBlogs(draftBlogs.filter((blog) => blog._id !== blogId));
+      toast.success('Blog deleted successfully');
     } catch (error) {
       console.error("Error deleting blog:", error);
-      toast.error('Blog delete failed');
-
+      toast.error("Failed to delete blog");
     }
-    setShowModal(false);
   };
-
-  const handleCloseModal = () => {
-    setBlogToDelete(null);
-    setShowModal(false);
-  };
-
-//   const createdAt = "2021-03-20T19:40:59.495Z";
-// const date = new Date(createdAt);
-// const formattedDate = date.toISOString().split('T')[0];
-// console.log(formattedDate);
+  
 const navigate = useNavigate();
 
 const handlePublish = async (blogId) => {
@@ -92,15 +91,25 @@ const handlePublish = async (blogId) => {
       }
       return blog;
     }));
-    toast.success('Blog published sucessfully');
+    toast.success('Blog published successfully');
     setTimeout(() => {
-      navigate("/profile");
+      navigate('/profile'); // Navigate to '/profile' route
     }, 2000);
   } catch (error) {
     console.error("Error publishing blog:", error);
-    toast.error("Failed to publish", error);
-
+    toast.error("Failed to publish blog"); // Display a generic error message to the user
   }
+};
+
+// Pagination logic
+const productsPerPage = 5; // Adjust the number of items per page as needed
+const indexOfLastProduct = currentPage * productsPerPage;
+const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+const paginate = draftBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
+
+// Handle page change
+const handlePageChange = (pageNumber) => {
+  setCurrentPage(pageNumber);
 };
 
   if (loading) {
@@ -109,14 +118,16 @@ const handlePublish = async (blogId) => {
 
   return (
     <div >
-      {draftBlogs.length === 0 ? (
+      {paginate.length === 0 ? (
         <>
           <h2>No blogs yet...</h2>
+          <Link to={`/create`}>
           <button className="button-primary">Create Blog</button>
+          </Link>
         </>
       ) : 
-      draftBlogs.map((blog,index) => (
-        <div className="published-main  d-flex justify-content-between mb-4 shadow" key={blog._id}>
+      paginate.map((blog,index) => (
+        <div className="published-main  d-flex justify-content-between mb-4 " key={blog._id}>
         <div className="published-img">
           <img src={blog.imageUrl} alt="blog image" style={{ height:"100%", width: "100%", borderRadius:"10px"}}/>
         </div>
@@ -136,54 +147,54 @@ const handlePublish = async (blogId) => {
                   Edit
                 </button>
                 </Link>
-                <button className="del" onClick={() => handleDeleteClick(blog._id)}>
+                <button className="del" onClick={() => handleDelete(blog._id)}>
                   <MdDelete />
                   Delete
                 </button>
                 
               </div>
             )}
-          <div className="published-det d-flex flex-column justify-content-between">
-            <div className="published-show d-flex justify-content-between">
-              <span className="span-btn p-1">{blog.category}</span>
-              <span><img src={View}/> Views</span>
-              <span><img src={Dot}/> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}</span>
-              <span>{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
+          <div clasName="published-det d-flex justify-content-between">
+              <div className="published-show d-flex justify-content-between">
+                <span className="span-btn p-1">{blog.category}</span>
+                <span className="view">
+                  <img src={View} alt="Views" /> Views
+                </span>
+                <span className="min">
+                  <img src={Dot} alt="Time" /> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}
+                </span>
+                <span className="dates">{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
+                <div
+              className="published-dot d-flex align-items-center justify-content-end"
+              onClick={() => toggleOptions(index)} // Pass index to toggleOptions
+            >
+              <BsThreeDotsVertical />
             </div>
-            <h2 style={{fontWeight: '600'}}>{blog.title}</h2>
-            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0,550)}</p>
-          </div>
+              </div>
+              <h2 className="pt-2" style={{ fontWeight: "600" }}>{blog.title}</h2>
+              <p className="content" style={{ fontSize: "1.2rem" }}>
+                {blog.content.slice(0, sliceLimit)}
+              </p>
+              <div className="published-show d-flex justify-content-between">
+                <span className="time">
+                  <img src={Dot} alt="Time" /> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}
+                </span>
+                <span className="time">{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
+                
+              </div>
+              <Link to={`/blog/${blog._id}`} className="times">
+                <button className="read">Read More...</button>
+              </Link>
+            </div>
         </div>
       </div>
       ))}
-      {showModal && (
-                     <div >
-                      <Modal.Dialog className="position-absolute " style={{ display: "flex", alignItems:"center", justifyContent:"center", top: '40%', left: '20%'}}>
-                       <Modal.Header >
-                         <Modal.Title>Confirm Delete</Modal.Title>
-                       </Modal.Header>
-               
-                       <Modal.Body>
-                         <p>Are you sure you want to delete this blog?</p>
-                       </Modal.Body>
-               
-                       <Modal.Footer>
-                         <Button variant="secondary" onClick={handleCloseModal}>No</Button>
-                         <Button variant="danger"  className="mx-2" onClick={handleDelete}>Delete</Button>
-                       </Modal.Footer>
-                     </Modal.Dialog>
-                  </div>
-        // <div className="modal">
-        //   <div className="modal-content">
-        //     <h2>Confirm Delete</h2>
-        //     <p>Are you sure you want to delete this blog?</p>
-        //     <div className="modal-buttons">
-        //       <button onClick={handleDelete}>Delete</button>
-        //       <button onClick={handleCloseModal}>No</button>
-        //     </div>
-        //   </div>
-      
-      )}
+      <Paginations
+       totalItems={draftBlogs.length}
+       itemsPerPage={productsPerPage}
+       onPageChange={handlePageChange}
+       currentPage={currentPage}
+      />
     
     </div>
   );

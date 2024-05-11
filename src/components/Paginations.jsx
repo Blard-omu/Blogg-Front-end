@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import '../css/pagination.css'
 
-function Pagination({ totalItems, itemsPerPage, onPageChange, currentPage, setCurrentPage }) {
+function Paginations({ totalItems, itemsPerPage, onPageChange, currentPage}) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const [currentPageState, setCurrentPageState] = useState(currentPage);
 
     useEffect(() => {
         // Check if there's a saved current page in localStorage
-        const savedPage = localStorage.getItem('currentPage');
+        const savedPage = localStorage.getItem('currentPages');
         if (savedPage) {
-            setCurrentPage(parseInt(savedPage));
+            setCurrentPageState(parseInt(savedPage));
         }
     }, []);
 
     const handlePageChange = (page) => {
-        setCurrentPage(page);
+        setCurrentPageState(page);
         // Save current page to localStorage
-        localStorage.setItem('currentPage', page);
+        localStorage.setItem('currentPages', page);
         onPageChange(page);
     };
 
@@ -23,7 +24,7 @@ function Pagination({ totalItems, itemsPerPage, onPageChange, currentPage, setCu
         const buttons = [];
         for (let i = 1; i <= totalPages; i++) {
             buttons.push(
-                <button key={i} onClick={() => handlePageChange(i)} className={currentPage === i ? 'active-m' : ''}>
+                <button key={i} onClick={() => handlePageChange(i)} className={currentPageState === i ? 'active-m' : ''}>
                     {i}
                 </button>
             );
@@ -33,11 +34,11 @@ function Pagination({ totalItems, itemsPerPage, onPageChange, currentPage, setCu
 
     return (
         <div className="pagination-btn">
-            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+            <button onClick={() => handlePageChange(currentPageState - 1)} disabled={currentPageState === 1}>Previous</button>
             {renderPaginationButtons()}
-            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+            <button onClick={() => handlePageChange(currentPageState + 1)} disabled={currentPageState === totalPages}>Next</button>
         </div>
     );
 }
 
-export default Pagination;
+export default Paginations;

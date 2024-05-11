@@ -50,7 +50,10 @@ const CreateBlog = () => {
       if (data?.success) {
         toast.success("Blog created successfully");
         setLoading(false);
-        setModalShow(true)
+        // setModalShow(true)
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
       } else {
         toast.error("Failed to create blog");
         setLoading(false);
@@ -139,6 +142,7 @@ const CreateBlog = () => {
             placeholder="Write your story here"
             value={content}
             className="form-control py-3"
+            style={{minHeight: '250px'}}
             onChange={(e) => setContent(e.target.value)}
             required
           />
@@ -153,11 +157,11 @@ const CreateBlog = () => {
           </button>
         </div>
       </form>
-      <FormModal
+      {/* <FormModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         handleProfile={handleProfile}
-      />
+      /> */}
     </div>
   );
 };

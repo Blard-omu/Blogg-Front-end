@@ -1,6 +1,7 @@
 .published-main{
-    width: 73rem;
-    height: 22rem;
+    width: 81rem;
+    height: 23rem;
+    border-radius: 10px;
 }
 .published-img{
     width:30%
@@ -56,35 +57,27 @@
 .options-publish .ed:hover{
     font-weight: 700;
 }
-.modal {
-    position: fixed;
-    top: -10%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: none;
+.time{
+    display: none !important;
+}
+.published-dot{
+    display: none !important;
+}
+.read{
+    background: none !important;
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+@media (min-width: 1080px) and (max-width: 1280px) {
+ .published-main{
+    width: 70rem !important;
+ }
 }
-
-.modal-buttons button {
-    margin-right: 10px;
-}
-
 
 @media (min-width: 769px) and (max-width: 1080px) {
     .published-main{
-        width: 45rem;
-        border: 1px solid blue;
+        width: 43.5rem;
     }
     .published-img{
         width: 40%;
@@ -93,30 +86,51 @@
         width: 55%;
     }
     .published-show{
-        width: 90%
+        width: 100%
     }
 }
 @media (max-width: 768px) {
     .published-main{
         display: flex;
         flex-direction: column;
-        width: 35rem;
-        height: 38rem;
+        justify-content: space-between;
+        width: 23rem;
+        height: 30rem;
     }
     .published-img{
-        width:65%;
-        border: 1px solid blue;
-        height: 45%;
+        width:100%;
+        height: 60%;
     }
     .published-info{
-        width: 65%;
-        height: 55%;
+        width: 100%;
+        height: 35%;
         display: flex;
         flex-direction: column;
-        gap:3rem;
-        border: 1px solid blue
+        justify-content: space-between;
     }
     .published-show{
         width: 100%
     }
+    .min{
+        display: none !important;;
+    }
+    .view{
+        display: none !important;
+    }
+    .dates{
+        display: none !important;;
+    }
+    .content{
+        display: none !important;
+    }
+    .publised-dot{
+        display: none !important;
+    }
+    .published-dot{
+        display: block !important;
+    }
+    .time{
+        display: block !important;
+    }
+    
 }
