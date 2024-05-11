@@ -10,10 +10,11 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEditSquare } from "react-icons/md";
 // import { FaTelegramPlane } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Pagination from "../components/Pagination";
+import toast from "react-hot-toast";
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
@@ -23,6 +24,7 @@ const Published = () => {
   const [showModal, setShowModal] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   const { user } = useAuth();
   console.log(user);
@@ -63,6 +65,10 @@ const Published = () => {
       await axios.delete(`/blog/${blogToDelete}`);
       // Remove the deleted blog from the publishedBlogs array
       setPublishedBlogs(publishedBlogs.filter((blog) => blog._id !== blogToDelete));
+      toast.success('Blog delete successful');
+      setTimeout(() => {
+        navigate('/profile')
+      }, 2000);
     } catch (error) {
       console.error("Error deleting blog:", error);
     }
@@ -166,7 +172,7 @@ const paginate = publishedBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
             )}
             
             <div clasName="published-det d-flex justify-content-between">
-              <div className="published-show d-flex justify-content-between">
+              <div className="published-show d-flex justify-content-between" style={{position: 'relative'}}>
                 <span className="span-btn p-1">{blog.category}</span>
                 <span>
                   <img src={View} /> Views
@@ -199,8 +205,8 @@ const paginate = publishedBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
                   //    style={{ display: 'block', position: 'initial' }}
                   //  >
                      <div >
-                      <Modal.Dialog className="position-absolute " style={{top:"40%", display: "flex", alignItems:"center", justifyContent:"center"}}>
-                       <Modal.Header closeButton >
+                      <Modal.Dialog style={{ position: 'absolute', top:"40%" ,left: '30%', display: "flex", alignItems:"center", justifyContent:"center"}}>
+                       <Modal.Header>
                          <Modal.Title>Confirm Delete</Modal.Title>
                        </Modal.Header>
                
@@ -210,7 +216,7 @@ const paginate = publishedBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
                
                        <Modal.Footer>
                          <Button variant="secondary" onClick={handleCloseModal}>No</Button>
-                         <Button variant="danger"  onClick={handleDelete}>Delete</Button>
+                         <Button variant="danger"  className="mx-2"  onClick={handleDelete}>Delete</Button>
                        </Modal.Footer>
                      </Modal.Dialog>
                   </div>

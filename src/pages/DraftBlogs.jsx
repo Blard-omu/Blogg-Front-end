@@ -10,9 +10,10 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEditSquare } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import toast from "react-hot-toast";
 
 const DraftBlogs = () => {
   const [draftBlogs, setDraftBlogs] = useState([]);
@@ -57,9 +58,15 @@ const DraftBlogs = () => {
     try {
       await axios.delete(`/blog/${blogToDelete}`);
       // Remove the deleted blog from the publishedBlogs array
-      setPublishedBlogs(publishedBlogs.filter((blog) => blog._id !== blogToDelete));
+      // setPublishedBlogs(publishedBlogs.filter((blog) => blog._id !== blogToDelete));
+      toast.success('Blog delete successful');
+      setTimeout(() => {
+        navigate("/profile");
+      }, 3000);
     } catch (error) {
       console.error("Error deleting blog:", error);
+      toast.error('Blog delete failed');
+
     }
     setShowModal(false);
   };
@@ -73,6 +80,7 @@ const DraftBlogs = () => {
 // const date = new Date(createdAt);
 // const formattedDate = date.toISOString().split('T')[0];
 // console.log(formattedDate);
+const navigate = useNavigate();
 
 const handlePublish = async (blogId) => {
   try {
@@ -84,8 +92,14 @@ const handlePublish = async (blogId) => {
       }
       return blog;
     }));
+    toast.success('Blog published sucessfully');
+    setTimeout(() => {
+      navigate("/profile");
+    }, 2000);
   } catch (error) {
     console.error("Error publishing blog:", error);
+    toast.error("Failed to publish", error);
+
   }
 };
 
@@ -143,13 +157,9 @@ const handlePublish = async (blogId) => {
       </div>
       ))}
       {showModal && (
-                  //    <div
-                  //    className="modal show"
-                  //    style={{ display: 'block', position: 'initial' }}
-                  //  >
                      <div >
-                      <Modal.Dialog className="position-absolute " style={{ display: "flex", alignItems:"center", justifyContent:"center"}}>
-                       <Modal.Header closeButton >
+                      <Modal.Dialog className="position-absolute " style={{ display: "flex", alignItems:"center", justifyContent:"center", top: '40%', left: '20%'}}>
+                       <Modal.Header >
                          <Modal.Title>Confirm Delete</Modal.Title>
                        </Modal.Header>
                
@@ -159,7 +169,7 @@ const handlePublish = async (blogId) => {
                
                        <Modal.Footer>
                          <Button variant="secondary" onClick={handleCloseModal}>No</Button>
-                         <Button variant="danger"  onClick={handleDelete}>Delete</Button>
+                         <Button variant="danger"  className="mx-2" onClick={handleDelete}>Delete</Button>
                        </Modal.Footer>
                      </Modal.Dialog>
                   </div>
