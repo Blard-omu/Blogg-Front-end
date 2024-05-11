@@ -13,6 +13,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Pagination from "../components/Pagination";
 
 const Published = () => {
   const [publishedBlogs, setPublishedBlogs] = useState([]);
@@ -21,6 +22,7 @@ const Published = () => {
   const [optionsOpenIndex, setOptionsOpenIndex] = useState(null); // Track the index of the blog with open options
   const [showModal, setShowModal] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { user } = useAuth();
   console.log(user);
@@ -29,7 +31,7 @@ const Published = () => {
   useEffect(() => {
     const fetchPublishedBlogs = async () => {
       try {
-        const response = await axios.get("/blogs/all", {
+        const response = await axios.get("/blogs/all?page=1&limit=1000000", {
           params: {
             state: "published",
             author: user.username,
@@ -72,6 +74,32 @@ const Published = () => {
     setShowModal(false);
   };
 
+ //------------Pagination----------
+
+ const handlePageChange = (pageNumber) => {
+  console.log("Changing page to:", pageNumber);
+  setCurrentPage(pageNumber);
+  localStorage.setItem("currentPage", pageNumber);
+};
+
+useEffect(() => {
+  // Retrieve current page from local storage
+  const storedPage = localStorage.getItem("currentPage");
+  if (storedPage) {
+    console.log(storedPage);
+    setCurrentPage(parseInt(storedPage));
+  } else {
+    setCurrentPage(1); // Set default page to 1 if not found in local storage
+  }
+}, []);
+// Pagination logic
+const productsPerPage = 5;
+const indexOfLastProduct = currentPage * productsPerPage;
+const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+const paginate = publishedBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
+
+// ---------------Pagination End---------
+
   // const handleOpenModal = () => {
   //   setIsOpen(true);
   // };
@@ -91,13 +119,13 @@ const Published = () => {
 
   return (
     <div>
-      {publishedBlogs.length === 0 ? (
+      {paginate.length === 0 ? (
         <>
           <h2>No blogs yet...</h2>
           <button className="button-primary">Create Blog</button>
         </>
       ) : 
-      publishedBlogs.map((blog, index) => (
+      paginate.map((blog, index) => (
         <div
           className="published-main d-flex  justify-content-between mb-4"
           key={blog._id}
@@ -156,6 +184,15 @@ const Published = () => {
           </div>
         </div>
       ))}
+      {
+        publishedBlogs.length > 5 ? <Pagination
+        totalItems={publishedBlogs.length}
+        itemsPerPage={productsPerPage}
+        onPageChange={handlePageChange}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      /> : " "
+      }
       {showModal && (
                   //    <div
                   //    className="modal show"

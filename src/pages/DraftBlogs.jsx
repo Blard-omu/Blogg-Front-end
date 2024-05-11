@@ -11,6 +11,8 @@ import { MdEditSquare } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const DraftBlogs = () => {
   const [draftBlogs, setDraftBlogs] = useState([]);
@@ -72,6 +74,21 @@ const DraftBlogs = () => {
 // const formattedDate = date.toISOString().split('T')[0];
 // console.log(formattedDate);
 
+const handlePublish = async (blogId) => {
+  try {
+    await axios.patch(`/blog/${blogId}`, { state: "published" });
+    // Update the state of the blog in the UI
+    setDraftBlogs(draftBlogs.map(blog => {
+      if (blog._id === blogId) {
+        return { ...blog, state: "published" };
+      }
+      return blog;
+    }));
+  } catch (error) {
+    console.error("Error publishing blog:", error);
+  }
+};
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -95,7 +112,7 @@ const DraftBlogs = () => {
           </div>
           {optionsOpenIndex === index && ( // Show options only for the clicked blog
               <div className="options-publish">
-                <button className="pub">
+                <button className="pub" onClick={() => handlePublish(blog._id)}>
                   <FaTelegramPlane />
                   Publish
                 </button>
@@ -105,11 +122,27 @@ const DraftBlogs = () => {
                   Edit
                 </button>
                 </Link>
-                <button className="del">
+                <button className="del" onClick={() => handleDeleteClick(blog._id)}>
                   <MdDelete />
                   Delete
                 </button>
-                {showModal && (
+                
+              </div>
+            )}
+          <div clasName="published-det d-flex justify-content-between">
+            <div className="published-show d-flex justify-content-between">
+              <span className="span-btn p-1">{blog.category}</span>
+              <span><img src={View}/> Views</span>
+              <span><img src={Dot}/> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}</span>
+              <span>{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
+            </div>
+            <h2 style={{fontWeight: '600'}}>{blog.title}</h2>
+            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0,550)}</p>
+          </div>
+        </div>
+      </div>
+      ))}
+      {showModal && (
                   //    <div
                   //    className="modal show"
                   //    style={{ display: 'block', position: 'initial' }}
@@ -141,21 +174,6 @@ const DraftBlogs = () => {
         //   </div>
       
       )}
-              </div>
-            )}
-          <div clasName="published-det d-flex justify-content-between">
-            <div className="published-show d-flex justify-content-between">
-              <span className="span-btn p-1">{blog.category}</span>
-              <span><img src={View}/> Views</span>
-              <span><img src={Dot}/> {blog.read_time > 1 ? <span>{blog.read_time} mins</span> : <span>{blog.read_time} min</span>}</span>
-              <span>{new Date(blog.createdAt).toISOString().split('T')[0]}</span>
-            </div>
-            <h2 style={{fontWeight: '600'}}>{blog.title}</h2>
-            <p style={{fontSize:"1.07rem"}}>{blog.content.slice(0,550)}</p>
-          </div>
-        </div>
-      </div>
-      ))}
     
     </div>
   );
