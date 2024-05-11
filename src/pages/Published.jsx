@@ -104,7 +104,7 @@ const Published = () => {
       ) : 
       paginate.map((blog, index) => (
         <div
-          className="published-main d-flex  justify-content-between mb-4 "
+          className="published-main d-flex  justify-content-between mb-4 shadow"
           key={blog._id}
         >
           <div className="published-img">
@@ -138,7 +138,7 @@ const Published = () => {
               </div>
             )}
             
-            <div clasName="published-det d-flex justify-content-between">
+            <div className="published-det d-flex flex-column justify-content-between">
               <div className="published-show d-flex justify-content-between">
                 <span className="span-btn p-1">{blog.category}</span>
                 <span className="view">

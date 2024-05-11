@@ -127,7 +127,7 @@ const handlePageChange = (pageNumber) => {
         </>
       ) : 
       paginate.map((blog,index) => (
-        <div className="published-main  d-flex justify-content-between mb-4" key={blog._id}>
+        <div className="published-main  d-flex justify-content-between mb-4 " key={blog._id}>
         <div className="published-img">
           <img src={blog.imageUrl} alt="blog image" style={{ height:"100%", width: "100%", borderRadius:"10px"}}/>
         </div>

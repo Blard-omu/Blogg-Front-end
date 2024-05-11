@@ -1,6 +1,7 @@
 .published-main{
     width: 81rem;
     height: 23rem;
+    border-radius: 10px;
 }
 .published-img{
     width:30%

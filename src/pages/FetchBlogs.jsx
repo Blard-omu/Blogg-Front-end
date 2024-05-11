@@ -9,7 +9,7 @@ import Pagination from "../components/Pagination";
 
 const FetchBlogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -17,13 +17,16 @@ const FetchBlogs = () => {
       try {
         const response = await axios.get("/blogs/all?page=1&limit=1000000");
         const allBlogs = response.data.blogs.filter((blog) => {
-          return blog.state === "draft";
+          return blog.state === "published";
         });
         setBlogs(allBlogs);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        setLoading(false);
       } finally {
         setLoading(false);
+
       }
     };
 
