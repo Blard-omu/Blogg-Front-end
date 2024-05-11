@@ -27,8 +27,8 @@ const Published = () => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
-  console.log(user);
-  console.log(publishedBlogs);
+  // console.log(user);
+  // console.log(publishedBlogs);
 
   useEffect(() => {
     const fetchPublishedBlogs = async () => {
@@ -133,7 +133,7 @@ const paginate = publishedBlogs.slice(indexOfFirstProduct, indexOfLastProduct);
       ) : 
       paginate.map((blog, index) => (
         <div
-          className="published-main d-flex  justify-content-between mb-4"
+          className="published-main d-flex  justify-content-between mb-4 shadow"
           key={blog._id}
         >
           <div className="published-img">

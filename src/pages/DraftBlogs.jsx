@@ -116,7 +116,7 @@ const handlePublish = async (blogId) => {
         </>
       ) : 
       draftBlogs.map((blog,index) => (
-        <div className="published-main  d-flex justify-content-between mb-4" key={blog._id}>
+        <div className="published-main  d-flex justify-content-between mb-4 shadow" key={blog._id}>
         <div className="published-img">
           <img src={blog.imageUrl} alt="blog image" style={{ height:"100%", width: "100%", borderRadius:"10px"}}/>
         </div>
@@ -143,7 +143,7 @@ const handlePublish = async (blogId) => {
                 
               </div>
             )}
-          <div clasName="published-det d-flex justify-content-between">
+          <div className="published-det d-flex flex-column justify-content-between">
             <div className="published-show d-flex justify-content-between">
               <span className="span-btn p-1">{blog.category}</span>
               <span><img src={View}/> Views</span>
