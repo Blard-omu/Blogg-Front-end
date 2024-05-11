@@ -16,7 +16,7 @@ const Popular = (props) => {
         setLoading(true)
         const response = await axios.get("/blogs/all?page=1&limit=10000");
         const trendingBlogs = response.data.blogs.filter((blog) => {
-          return blog.tags.includes("popular") && blog.state === "published";
+          return blog.tags.includes("Popular Home") && blog.state === "published" && blog.category === tag;
         });
         setBlogs(trendingBlogs.slice(0, 4));
         setLoading(false);
@@ -37,7 +37,7 @@ const Popular = (props) => {
   return (
     <>
       <div className="d-flex align-items-center gap-4 mt-5 mb-2">
-        <h2>Popular</h2> <span className="trending-tag">{tag}</span>
+        <h2>Popular</h2> <span className="trending-tag" style={{backgroundColor: bg}} >{tag}</span>
       </div>
       <div className="recommend-grid">
         {loading ? <h3>Loading. . .</h3> : <PopularCard blogs={blogs} />}

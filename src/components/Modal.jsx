@@ -1,34 +1,35 @@
 import { useState } from 'react';
-import '../css/Modal.css'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-function OffCanvas({children}) {
-  const [isOpen, setIsOpen] = useState(false);
+function ModalCom() {
+  const [show, setShow] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
-    <div className='modal-fuck'>
-      <button onClick={toggleMenu}>Open Menu</button>
-      {isOpen && (
-        <div className="backdrop" onClick={toggleMenu}>
-          <div className="menu" style={{ zIndex: 10000000 }}>
-            <button className="close-btn" onClick={toggleMenu}>&times;</button>
-            <div className="modal-content">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                {children}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
-export default OffCanvas;
+export default ModalCom;

@@ -14,7 +14,6 @@ const Home = () => {
   const line = {
     width: "100%",
     border: "1px solid #26bdd2",
-    margin: "6rem 0",
   };
 
   return (
@@ -26,10 +25,13 @@ const Home = () => {
       <div className="line" style={line}></div>
       <Container className="">
         <Trending />
-        <Popular tag="Sport" bg="#26d22d" />
+        <Popular tag="sport" bg="#6726D2" />
+        <Popular tag="Health care" bg="#26D22D"/>
+        <Popular tag="Entertainment" bg="#D2A126"/>
       </Container>
     </>
   );
 };
 
 export default Home;
+

@@ -45,6 +45,14 @@ const MostReadCard = () => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}/${month}/${day}`;
   };
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    const truncatedText = text.slice(0, maxLength);
+    const lastSpaceIndex = truncatedText.lastIndexOf(" ");
+    return truncatedText.slice(0, lastSpaceIndex) + "...";
+  };
 
   return (
     <div className="most-readCard">
@@ -57,7 +65,7 @@ const MostReadCard = () => {
             </div>
             <div className="most-card-inner">
               <div className="self-defence1 d-flex justify-content-between">
-                <span className="tag1 t1">Construction</span>
+                <span className="trending-tag">Construction</span>
                 <div className="views1">
                   <img src={views} alt="view_icon" />
                   <span className="ms-2">4 Views</span>
@@ -72,7 +80,7 @@ const MostReadCard = () => {
               <p>
                 Lorem ipsum dolor sit amet consectetur. Sed vel integer praesent
                 eget ac urna. Sit fames aenean et orci diam. Mauris tincidunt
-                ornare facilisis dolor enim.
+                ornare
               </p>
             </div>
           </div>
@@ -88,7 +96,7 @@ const MostReadCard = () => {
                 </div>
                 <div className="most-card-inner">
                   <div className="self-defence1 d-flex justify-content-between">
-                    <span className="tag1 t1">{blog.category}</span>
+                    <span className="trending-tag">{blog.category}</span>
                     <div className="views1">
                       <img src={views} alt="view_icon" />
                       <span className="ms-2">4 Views</span>
@@ -99,9 +107,9 @@ const MostReadCard = () => {
                     </div>
                     <span className="date1">{formatDate(blog.updatedAt)}</span>
                   </div>
-                  <h4>{blog.title}</h4>
+                  <h4>{truncateText(blog.title, 60)}</h4>
                   <p style={{ fontSize: "18px" }}>
-                    {blog.content.slice(0, 140)}
+                    {truncateText(blog.content, 140)}
                   </p>
                 </div>
               </div>

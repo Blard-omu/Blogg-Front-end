@@ -6,6 +6,7 @@ import loader from "../assets/images/loader.gif";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Pagination from "../components/Pagination";
+import Skeletal from "../components/Skeletal";
 
 const FetchBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -15,6 +16,7 @@ const FetchBlogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("/blogs/all?page=1&limit=1000000");
         const allBlogs = response.data.blogs.filter((blog) => {
           return blog.state === "published";
@@ -26,7 +28,6 @@ const FetchBlogs = () => {
         setLoading(false);
       } finally {
         setLoading(false);
-
       }
     };
 
@@ -71,27 +72,36 @@ const FetchBlogs = () => {
       >
         All blogs
       </h1>
-      {paginate && (
-        <div className="blog-container">
-          {paginate.map((blog) => (
-            <div className="shadow  p-3" key={blog._id}>
-              <Link className="link" to={`/blog/${blog._id}`}>
-                <BlogCard {...blog} />
-              </Link>
-            </div>
-          ))}
+      {loading ? (
+        <div className="d-flex gap-5">
+          <Skeletal />
+          <Skeletal />
+          <Skeletal />
         </div>
+      ) : (
+        paginate && (
+          <div className="blog-container">
+            {paginate.map((blog) => (
+              <div className="shadow  p-3" key={blog._id}>
+                <Link className="link" to={`/blog/${blog._id}`}>
+                  <BlogCard {...blog} />
+                </Link>
+              </div>
+            ))}
+          </div>
+        )
       )}
-      {
-        blogs.length > 12 ? <Pagination
-        totalItems={blogs.length}
-        itemsPerPage={productsPerPage}
-        onPageChange={handlePageChange}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      /> : " "
-      }
-      
+      {paginate.length > 2 && blogs.length > 12 ? (
+        <Pagination
+          totalItems={blogs.length}
+          itemsPerPage={productsPerPage}
+          onPageChange={handlePageChange}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      ) : (
+        " "
+      )}
     </div>
   );
 };

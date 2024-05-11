@@ -3,6 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "../css/createblog.css";
+import ModalCom from "../components/Modal";
+import { FormModal } from "../components/CreateFormModal";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -12,6 +14,8 @@ const CreateBlog = () => {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -45,16 +49,20 @@ const CreateBlog = () => {
 
       if (data?.success) {
         toast.success("Blog created successfully");
+        setLoading(false);
+        // setModalShow(true)
         setTimeout(() => {
           navigate("/profile");
-        }, 3000);
+        }, 2000);
       } else {
         toast.error("Failed to create blog");
+        setLoading(false);
       }
     } catch (err) {
       if (err?.response?.data) {
         const error = err.response.data.error;
         toast.error(error);
+        setLoading(false);
       } else {
         toast.error("Failed to create blog");
       }
@@ -62,6 +70,12 @@ const CreateBlog = () => {
       setLoading(false);
     }
   };
+
+  function handleProfile() {
+    setTimeout(() => {
+      navigate("/profile");
+    }, 500);
+  }
 
   return (
     <div style={{ paddingTop: "120px" }}>
@@ -94,7 +108,7 @@ const CreateBlog = () => {
           <input
             type="text"
             className="form-control py-3"
-            placeholder="Enter tags here"
+            placeholder="Enter tags here e.g Trending,Popular"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             required
@@ -128,6 +142,7 @@ const CreateBlog = () => {
             placeholder="Write your story here"
             value={content}
             className="form-control py-3"
+            style={{minHeight: '250px'}}
             onChange={(e) => setContent(e.target.value)}
             required
           />
@@ -142,8 +157,15 @@ const CreateBlog = () => {
           </button>
         </div>
       </form>
+      {/* <FormModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        handleProfile={handleProfile}
+      /> */}
     </div>
   );
 };
 
 export default CreateBlog;
+
+

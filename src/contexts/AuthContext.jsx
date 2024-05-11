@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchApi = async () => {
     try {
-      const response = await axios.get("/blogs/all", {
+      const response = await axios.get("/blogs/all?page=1&limit=1000000", {
         params: {
           state: "published"
         },

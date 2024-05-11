@@ -16,9 +16,9 @@ const TrendingCard = () => {
         setLoading(true);
         const response = await axios.get("/blogs/all?page=1&limit=10000");
         const trendingBlogs = response.data.blogs.filter((blog) => {
-          return blog.tags.includes("popular trending") && blog.state === "published";
-          setLoading(false);
+          return blog.tags.includes("popular trending home") && blog.state === "published";
         });
+        setLoading(false);
         setBlogs(trendingBlogs.slice(0, 1));
       } catch (error) {
         console.error("Error fetching blogs:", error);

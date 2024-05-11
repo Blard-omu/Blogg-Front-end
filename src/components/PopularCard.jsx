@@ -39,11 +39,11 @@ const PopularCard = ({blogs}) => {
                   </span>
                 </div>
               </div>
-              <h3>{b.title}</h3>
+              <h3>{truncateText(b.title,60)}</h3>
               <p>
-                {truncateText(b.content, 200)}{" "}
+                {truncateText(b.content, 180)}{" "}
                 <Link className="link" to={`/blog/${b._id}`}>
-                  Read more
+                  <b>Read more</b>
                 </Link>{" "}
               </p>
             </div>

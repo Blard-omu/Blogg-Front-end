@@ -26,6 +26,7 @@
 
 .trending-card-image > img{
     width: 100%;
+    object-fit: fill;
 }
 
 .self-defence{
@@ -40,16 +41,19 @@
     background-color: var(--royal-pink);
     color: var(--white);
     border-radius: 5px;
+    min-width: 80px;
+    text-align: center;
 }
 .tag{
     padding: 5px 8px;
     background-color: var(--royal-pink);
     color: var(--white);
     border-radius: 5px;
+    min-width: 180px;
 }
-.tag, .views, .read-time, .date{
+/* .tag, .views, .read-time, .date{
     width: 23%;
-}
+} */
 .veiws{
     display: flex;
     justify-content: space-between;

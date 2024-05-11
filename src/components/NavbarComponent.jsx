@@ -31,7 +31,7 @@ const NavbarComponent = () => {
     width: "100%",
     background: "white",
     top: "0px",
-    zIndex: 9999,
+    zIndex: 99,
   };
   const active = {
     textDecoration: 'none',

@@ -1,6 +1,6 @@
 .profile-main{
-    width: 73rem;
-    height: 14rem;
+    width: 81rem;
+    height: 14.5rem;
 }
 .profile-det{
     width: 75%;
@@ -9,14 +9,13 @@
     width: 25%;
 }
 .profile-img{
-    /* border: 1px solid blue; */
     border-radius: 50%;
-    width: 218px;
-    height: 220px;
+    width: 220px;
+    height: 228px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10rem;
+    font-size: 8rem;
     background-color: #26BDD2;
     color: white;
 }
@@ -45,17 +44,23 @@
     padding: 7px, 20px, 7px, 20px;
     
 }
+.addy{
+    display: none !important;;
+}
+@media (min-width: 1080px) and (max-width: 1280px) {
+    .profile-main{
+        width: 70rem;
+    }
+}
 @media (min-width:769px) and (max-width: 1080px) {
     .profile-main{
         width: 45rem;
     }
     .profile-det{
         width: 85%;
-        border: 1px solid #26BDD2;
     }
     .profile-pics{
         width: 20%;
-        border: 1px solid #26BDD2;
     }
     /* .profile-img{
         width: 198px;
@@ -67,5 +72,34 @@
     .edit{
         width: 15%;
         
+    }
+}
+@media (max-width: 768px) {
+    .profile-main{
+        width: 23rem;
+        height: 15rem;
+    }
+    .profile-img{
+        border-radius: 50%;
+        width: 200px;
+        height: 210px;
+    }
+    .param{
+        display: none !important;
+    }
+    .names{
+        display: none !important;
+    }
+    .profile-more{
+        display: none !important;
+    }
+    .profile-mores{
+        width: 15.5rem;
+        color: #808080;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .addy{
+        display: block !important;
     }
 }
